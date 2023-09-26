@@ -1,8 +1,8 @@
 # To do list
 
 - Côté Calcul :
-    - [ ] Trouvé le calcul qui permet de définir les rouleaux à acheter.
-    - [ ] 
+    - [ ] Trouver le calcul qui permet de définir les rouleaux à acheter.
+    - [ ] OUI
 
 
 

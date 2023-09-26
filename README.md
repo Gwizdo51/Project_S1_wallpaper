@@ -1,8 +1,8 @@
 # To do list
 
 - Côté Calcul :
-      - [] Trouver le calcul qui permet de faire le projet
-      - 
+      - [x] OUI
+
 
 
 

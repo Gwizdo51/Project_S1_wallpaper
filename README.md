@@ -1,7 +1,7 @@
 # To do list
 
 - Côté Calcul :
-    - [x] OUI
+    - [ ] OUI
 
 
 

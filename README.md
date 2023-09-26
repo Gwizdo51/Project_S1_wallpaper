@@ -3,7 +3,7 @@
 - Faire un logiciel Pc :
     - Ce dernier permet de quantifier les mattériaux à commander.
     - Faciliter le cliens sur tout les plans calcul.
-    - Et qui pourrait donner le prix.
+    - Déterminer le prix total à payer.
 
 - Fonctionnement :
     - Saisir les différents côtes des différents mûrs.

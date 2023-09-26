@@ -1,3 +1,11 @@
+# To do list
+
+- Côté Calcul :
+      - [] Trouver le calcul qui permet de faire le projet
+      - 
+
+
+
 # Project_S1_wallpaper
 
 - Faire un logiciel Pc :

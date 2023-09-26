@@ -2,7 +2,9 @@
 
 - Côté Calcul :
     - [ ] Trouver le calcul qui permet de définir les rouleaux à acheter.
-    - [ ] OUI
+    - [ ] Trouver le calcul qui permet de déterminer la côte.
+    - [ ] Trouver le calcul qui retire les fenêtre.
+    - [ ] Trouver le calcul qui donne la quantité de colle à acheter.
 
 
 

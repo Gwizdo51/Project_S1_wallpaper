@@ -6,7 +6,13 @@
     - [ ] Trouver le calcul qui retire les fenêtre.
     - [ ] Trouver le calcul qui donne la quantité de colle à acheter.
 
+# Initialisation
 
+- Ce qu'il faut faire principalement:
+    - [ ] Spécification (Tableau de problématiques + Solutions).
+    - [ ] Maquette fonctionnelle.
+    - [ ] Schéma fonctionnelle.
+    - [ ] Cahier des charges.
 
 
 # Project_S1_wallpaper

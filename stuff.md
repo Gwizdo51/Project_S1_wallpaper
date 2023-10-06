@@ -13,26 +13,44 @@
 
 # Questions
 
-- pose de papier peint
+- Pose de papier peint
+    - Les tailles de papier peint sont-elles fixes ? -> On peut imaginer un fichier "BDD.txt" qui listerait les différentes tailles de papier peint disponible, et laisser l'utilisateur choisir.
+        - pas de gestion de stocks - tailles standards qui existent, mais tailles bizarres possibles -> les 2, sans exigence
     - Faut-il aussi mettre du papier peint sur la mansarde (~plafond) ?
-    - Sens d'application du papier peint: vertical, horizontal, avec un angle qu'on laisserait l'utilisateur entrer ?
-    - Les tailles de papier peint sont-elles fixes ? -> On peut imaginer un fichier "BDD.txt" qui listerait les différentes tailles de papier peint disponible, et laisser l'utilisateur choisir
+        - mur toujours plan -> alignement non necessaire entre mur penché
+    - Sens d'application du papier peint: vertical, horizontal ?
+        - papier vertical
     - Faut-il aligner les motifs d'un mur à l'autre dans une même pièce ?
+        - alignement sur les angles
     - Laisser la possibilité de mettre différents papiers peints sur un même mur ?
+        - risque d'usine à gaz - Si on peut sans usine à gaz, sinon pas de changement de papier peint
     - Faut-il réutiliser les pertes sur d'autres murs ?
-- mesures
+        - réutiliser tous les petits bouts, pas une bonne idée -> essayer de réuitliser les chutes de plus de 1m
+
+- Mesures
     - Rapporteur disponible ? -> mesure d'angle par l'utilisateur ?
+        - pas de rapporteur
     - Quelles unités pour les distances ? On laisse le choix ? On fixe à des mètres ?
-    - Quels types de forme de mur ? Polygones complètement aléatoires, ou on se limite a des hauts-de-pignons et sous-pentes ?
-- colle
+        - à nous de trouver une solution élégante -> que sera le mieux pour l'utilisateur -> peut-être que le mètre ?
+    - Quels types de formes de mur ? Polygones complètement aléatoires, ou on se limite a des hauts-de-pignons et sous-pentes ?
+        - mur rectangle, avec éventuellement des mansardes
+
+- Colle
     - Comment poser la colle ? Sur tout le papier peint ?
+        - tout le papier peint, 2mm -> suivre le prompt
     - Comment la colle est conditionnée ? Pots ? Eau + poudre ? -> Retourner une quantité de pots de colle plutôt qu'un volume ?
-    - Faut-il proposer différentes quantité de colle ?
-- fenêtres
+        - volume de colle nécessaire -> préciser si on veut le volume brut (diviser par le volume d'un pot), et si en poudre, ratio de dissolution, on peut obtenir le nombre de sacs
+
+- Fenêtres
     - Quelles formes de fenêtres à retirer: carré, rectangulaire, circulaire, polygone quelconque ... ?
-    - Taille de fenêtre
+        - fenêtres rectangulaires
     - Fenêtre et motifs: comment aligner les motifs si la fenêtre est énorme ?
-- livrable
-    - Y a-t-il besoin d'une interface graphique, avec des boutons etc ?
-    - se rappeler des derniers résultats ? -> donner des noms, une bdd historique ?
-    - Qui utilisera le logiciel ?
+        - /!\ attention avec les chutes de moins de 1m, on peut les réutiliser avec une grande fenêtre /!\
+
+- Livrable
+    - Y a-t-il besoin d'une interface graphique, avec des boutons etc ? (V2)
+        - pas destiné à des informaticiens, donc plutôt oui, mais sans pression (si c'est possible)
+    - se rappeler des derniers résultats ? -> donner des noms, une bdd historique ? (V2)
+        - plutôt une super calculatrice, mais si on peut ressortir des projets précédents c'est mieux -> peut-être V2 ? -> voir comment l'implémenter dans le projet déjà fini, concevoir les branchements
+    - Qui utilisera le logiciel ? -> le patron ou les techniciens (qtté de contrôle sur l’application) ? (V2)
+        - service achat qui devrait se servir du logiciel

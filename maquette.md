@@ -3,7 +3,7 @@
 <p style="text-align: center;">EAOA progress</p>
 
 1. [P]apier peint
-2. Pieces & [m]urs
+2. [M]urs / pieces
 3. [C]olle
 4. [R]ésultat
 5. [Q]uitter
@@ -41,5 +41,16 @@ Hauteur maximale: ___<br>
 Largeur maximale: ___
 
 Combien de pans coupés: ___<br>
-petite hauteur: ___<br>
-petite largeur
+Pan coupé #1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Petite hauteur: ___<br> <!-- pas encore sûr-sûr -->
+&nbsp;&nbsp;&nbsp;&nbsp;Petite largeur: ___ <!-- pas encore sûr-sûr --><br>
+Pan coupé #2:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Petite hauteur: ___<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Petite largeur: ___
+
+Combien d'obstacles: ___<br>
+Obstacle #1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Longueur: ___<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Largeur: ___<br>
+Obstacle #2:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;...<br>

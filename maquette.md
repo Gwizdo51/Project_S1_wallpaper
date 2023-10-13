@@ -8,6 +8,10 @@
 4. [R]ésultat
 5. [Q]uitter
 
+Unités:
+- Distance: m (mètres)
+- Volume: L (litres)
+
 ---
 
 # Page papier peint
@@ -16,7 +20,7 @@
 
 Longueur: ___<br>
 Largeur: ___<br>
-Motif ? Oui/Non<br>
+Motif ? [O]ui/[N]on<br>
 Longueur motif: ___
 
 ---
@@ -54,3 +58,22 @@ Obstacle #1:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Largeur: ___<br>
 Obstacle #2:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+
+---
+
+# Colle
+
+<p style="text-align: center;">Conditionnement colle</p>
+
+La colle est-elle conditionnée ? [O]ui/[N]on<br>
+Volume par unité: ___
+
+--
+
+# Résultat
+
+<p style="text-align: center;">Résultat</p>
+
+\# Rouleaux: ___<br>
+Volume colle: ___<br>
+\# Pots de colle: ___

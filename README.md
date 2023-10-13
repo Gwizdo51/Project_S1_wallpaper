@@ -29,3 +29,12 @@
     - Saisir les plans coupés.
     - L'application effectue le calcul
     - Le résultat du calcul s'affiche et indique également la quantité de colle à acheter.
+
+# Idées V2
+
+- Historique de projets
+- BDD de rouleaux disponibles
+- Interface graphique dynamique (avec des boutons et tt)
+- changement d'unité
+- différents papiers peints (mélange motifs et uni)
+- changement de langue

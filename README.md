@@ -38,3 +38,4 @@
 - changement d'unité
 - différents papiers peints (mélange motifs et uni)
 - changement de langue
+- laisser le choix d'utiliser différent papier peints

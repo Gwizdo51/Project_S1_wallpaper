@@ -1,3 +1,17 @@
+# Commandes GIT
+
+## Commandes de base
+
+- `git clone <repo_link>` : clone le repo depuis le cloud dans un dossier local
+- `git fetch` : mettre à jour les références du cloud
+- `git status` : comparer les changements entre le dossier local et le dernier commit
+- `git pull` : mettre à jour le dossier local ("tirer" les changements du cloud)
+- `git add ` : ajouter les changements pour un nouveau commit
+- `git commit` : faire un nouveau commit (une nouvelle photo)
+- `git push` : mettre à jour le repo dans le cloud ("pousser" ses commits dans le cloud)
+
+## Branches
+
 # To do list
 
 - Côté Calcul :
@@ -13,7 +27,6 @@
     - [ ] Maquette fonctionnelle.
     - [ ] Schéma fonctionnelle.
     - [ ] Cahier des charges.
-
 
 # Project_S1_wallpaper
 
@@ -39,5 +52,3 @@
 - différents papiers peints (mélange motifs et uni)
 - changement de langue
 - laisser le choix d'utiliser différent papier peints
-
-# Commandes GIT

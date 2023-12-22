@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "types.h"
+#include "resultat.h"
 
 int resultat(float quantite_colle, int nombre_pots, char* nom_fichier, LL_ROULEAU liste_rouleaux)
 {

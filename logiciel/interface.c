@@ -9,14 +9,14 @@ int interface_colle(float volume_pots){
     BOOL caractere_valide;
 
     printf("4) CONDITIONNEMENT COLLE \n");
-    printf("Est-ce que la colle est conditionnée ? [O]ui/ [N]on")
+    printf("Est-ce que la colle est conditionnée ? [O]ui/ [N]on");
 
-    caractere_valide = FAUX;
+    caractere_valide = FALSE;
 
-    while (caractere_valide == FAUX){
+    while (caractere_valide == FALSE){
         scanf("%c", &caractere_entre);
         if(caractere_entre == 'o' || caractere_entre == 'n'){
-            caractere_valide = VRAI;
+            caractere_valide = TRUE;
         }   
     }
 

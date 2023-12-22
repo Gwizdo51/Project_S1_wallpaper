@@ -21,18 +21,42 @@
 # To do list
 
 - Côté Calcul :
-    - [ ] Trouver le calcul qui permet de définir les rouleaux à acheter.
-    - [ ] Trouver le calcul qui permet de déterminer la côte.
-    - [ ] Trouver le calcul qui retire les fenêtre.
-    - [ ] Trouver le calcul qui donne la quantité de colle à acheter.
-
-# Initialisation
+    - [x] Trouver le calcul qui permet de définir les rouleaux à acheter.
+    - [x] Trouver le calcul qui permet de déterminer la côte.
+    - [x] Trouver le calcul qui retire les fenêtre.
+    - [x] Trouver le calcul qui donne la quantité de colle à acheter.
 
 - Ce qu'il faut faire principalement:
-    - [ ] Spécification (Tableau de problématiques + Solutions).
-    - [ ] Maquette fonctionnelle.
-    - [ ] Schéma fonctionnelle.
-    - [ ] Cahier des charges.
+    - [x] Spécification (Tableau de problématiques + Solutions).
+    - [x] Maquette fonctionnelle.
+    - [x] Schéma fonctionnelle.
+    - [x] Cahier des charges.
+
+# Structure des fichiers
+
+- liste_chainees
+    - ll_chutes.c
+    - ll_chutes.h
+    - ll_series_murs.c
+    - ll_series_murs.h
+    - ll_les.c
+    - ll_les.h
+    - ll_murs.c
+    - ll_murs.h
+    - ll_obstacles.c
+    - ll_obstacles.h
+    - ll_rouleaux.c
+    - ll_rouleaux.h
+- logiciel
+    - types.h
+    - calcul.c
+    - calcul.h
+    - interface.c
+    - interface.h
+    - main.c
+    - main.h
+    - resultat.c
+    - resultat.h
 
 # Project_S1_wallpaper
 

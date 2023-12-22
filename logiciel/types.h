@@ -1,6 +1,10 @@
 #ifndef _HEADER_TYPES
 #define _HEADER_TYPES
 
+// standard libraries
+#include <stdio.h>
+#include <stdlib.h>
+
 // booléen
 #define BOOL char
 #define FALSE 0

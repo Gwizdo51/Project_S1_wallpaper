@@ -80,7 +80,7 @@ typedef struct _MUR {
           largeur_pan_gauche,
           hauteur_pan_droit,
           largeur_pan_droit;
-    LL_LE liste_lés;
+    LL_LE liste_les;
     LL_OBSTACLE liste_obstacles;
 } MUR;
 

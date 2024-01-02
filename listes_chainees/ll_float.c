@@ -1,7 +1,7 @@
 #include "ll_float.h"
 
 
-LL_FLOAT llf_creer() {
+LL_FLOAT llf_create() {
     LL_FLOAT linked_list = {
         .first_node = NULL
     };
@@ -9,7 +9,7 @@ LL_FLOAT llf_creer() {
 }
 
 
-int llf_longueur(LL_FLOAT *linked_list) {
+int llf_length(LL_FLOAT *linked_list) {
     int list_length = 0;
     LL_FLOAT_NODE *current_node = linked_list->first_node;
     while (current_node) {
@@ -20,7 +20,7 @@ int llf_longueur(LL_FLOAT *linked_list) {
 }
 
 
-void llf_ajouter(LL_FLOAT *linked_list, float new_data) {
+void llf_append(LL_FLOAT *linked_list, float new_data) {
     if (!linked_list->first_node) {
         // if the list is empty, return a new link with the provided value
         linked_list->first_node = (LL_FLOAT_NODE*) malloc(sizeof(LL_FLOAT_NODE));
@@ -41,8 +41,8 @@ void llf_ajouter(LL_FLOAT *linked_list, float new_data) {
 }
 
 
-float *llf_obtenir(LL_FLOAT *linked_list, int index) {
-    if (index >= llf_longueur(linked_list)) {
+float *llf_get(LL_FLOAT *linked_list, int index) {
+    if (index >= llf_length(linked_list)) {
         exit(EXIT_FAILURE);
     }
     int current_index = 0;
@@ -55,8 +55,8 @@ float *llf_obtenir(LL_FLOAT *linked_list, int index) {
 }
 
 
-void llf_retirer(LL_FLOAT *linked_list, int index) {
-    if (index >= ll_length(linked_list)) {
+void llf_remove(LL_FLOAT *linked_list, int index) {
+    if (index >= llf_length(linked_list)) {
         exit(EXIT_FAILURE);
     }
     LL_FLOAT_NODE *node_to_remove;

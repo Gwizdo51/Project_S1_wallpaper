@@ -64,6 +64,56 @@ void calcul_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
 }
 
 
+void calcul_assemblage_le(SerieMur liste_series_murs[], Rouleau liste_rouleau[]) {
+    int indice_serie_mur, indice_mur, indice_le_i, indice_le_j;
+    float hauteur_motif;
+    Mur mur_actuel;
+    Le le_actuel, le_compare;
+    bool les_tous_assembles;
+
+    for (indice_serie_mur = 0; indice_serie_mur < strlen(liste_series_murs.serie_murs); indice_serie_mur++) {
+        hauteur_motif = liste_rouleau[liste_series_murs[indice_serie_mur].type_papier_peint].hauteur_motif;
+
+        if (hauteur_motif > 0) {
+            for (indice_mur = 0; indice_mur < strlen(liste_series_murs.serie_murs)[indice_serie_mur].liste_murs; indice_mur++) {
+                mur_actuel = liste_series_murs[indice_serie_mur].liste_murs[indice_mur];
+                les_tous_assembles = false;
+
+                while (!les_tous_assembles) {
+                    les_tous_assembles = true;
+
+                    for (indice_le_i = 0; indice_le_i < strl(mur_actuel.liste_le) - 1; indice_le_i++) {
+                        le_actuel = mur_actuel.liste_le[indice_le_i];
+
+                        for (indice_le_j = indice_le_i + 1; indice_le_j < strlen(mur_actuel.liste_le); indice_le_j++) {
+                            le_compare = mur_actuel.liste_le[indice_le_j];
+
+                            if (le_actuel.x == le_compare.x) {
+                                if (le_actuel.y == le_compare.y + hauteur_motif) {
+                                    les_tous_assembles = false;
+                                    le_actuel.hauteur += le_compare.hauteur;
+                                    supprimer(mur_actuel.liste_le, indice_le_j);
+                                    break;
+                                } else if (le_actuel.y == le_compare.y - hauteur_motif) {
+                                    les_tous_assembles = false;
+                                    le_actuel.hauteur -= le_compare.hauteur;
+                                    supprimer(mur_actuel.liste_le, indice_le_j);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!les_tous_assembles) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
     // variables
     int indice_serie_murs, indice_mur, indice_le;
@@ -130,5 +180,44 @@ void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float
     }
     else {
         *nombre_pots = 0;
+    }
+}
+
+
+void calcul_decoupage_le(SerieMur liste_series_murs[], Rouleau liste_rouleaux[]) {
+    int indice_serie_murs, indice_mur, indice_le;
+    Mur mur_actuel;
+    Le le_actuel;
+    float hauteur_le_initial, largeur_le_initial, X_le_initial, longueur_motif, hauteur_totale_decoupee;
+
+    for (indice_serie_murs = 0; indice_serie_murs < strlen(liste_series_murs.serie_murs); indice_serie_murs++) {
+        longueur_motif = liste_rouleaux[liste_series_murs.serie_murs[indice_serie_murs].type_papier_peint].longueur_motif;
+
+        if (longueur_motif > 0) {
+            for (indice_mur = 0; indice_mur < strlen(liste_series_murs.serie_murs[indice_serie_murs].liste_murs); indice_mur++) {
+                mur_actuel = liste_series_murs.serie_murs[indice_serie_murs].liste_murs[indice_mur];
+
+                for (indice_le = 0; indice_le < strlen(mur_actuel.liste_le); indice_le++) {
+                    le_actuel = mur_actuel.liste_le[indice_le];
+                    hauteur_le_initial = le_actuel.hauteur;
+                    largeur_le_initial = le_actuel.largeur;
+                    X_le_initial = le_actuel.X;
+                    le_actuel.hauteur = longueur_motif;
+                    hauteur_totale_decoupee = longueur_motif;
+
+                    while (hauteur_totale_decoupee < hauteur_le_initial) {
+                        Le nouveau_le;
+                        nouveau_le.X = X_le_initial;
+                        nouveau_le.Y = le_actuel.Y + longueur_motif;
+                        nouveau_le.largeur = largeur_le_initial;
+                        nouveau_le.hauteur = longueur_motif;
+                        ajouter(&mur_actuel.liste_le, nouveau_le);
+
+                        hauteur_totale_decoupee += longueur_motif;
+                        le_actuel = nouveau_le;
+                    }
+                }
+            }
+        }
     }
 }

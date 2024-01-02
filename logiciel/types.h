@@ -1,6 +1,10 @@
 #ifndef _HEADER_TYPES
 #define _HEADER_TYPES
 
+// standard libraries
+#include <stdio.h>
+#include <stdlib.h>
+
 // booléen
 #define BOOL char
 #define FALSE 0
@@ -76,7 +80,7 @@ typedef struct _MUR {
           largeur_pan_gauche,
           hauteur_pan_droit,
           largeur_pan_droit;
-    LL_LE liste_lés;
+    LL_LE liste_les;
     LL_OBSTACLE liste_obstacles;
 } MUR;
 

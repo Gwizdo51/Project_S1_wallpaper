@@ -77,5 +77,7 @@ int interface_rouleaux(LL_ROULEAU ROULEAU)
         rouleau.quantité = 0;
         rouleau.liste_chutes = create_liste_chutes(ROULEAU);
         ajouter(liste_rouleaux(ROULEAU), rouleau);
+        // rouleau.liste_chutes <- créer()
+        // ajouter(liste_rouleau, rouleau)
     }
 }

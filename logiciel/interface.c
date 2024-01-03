@@ -27,11 +27,11 @@ void interface_colle(float *volume_pots);
     if (caractere_entre == 'o')
     {
         printf("Volume de colle par pots : ");
-        scanf("%f", &volume_pots);
+        scanf("%f", &*volume_pots);
     }
     else
     {
-        volume_pots = 0;
+        *volume_pots = 0;
     }
 }
 

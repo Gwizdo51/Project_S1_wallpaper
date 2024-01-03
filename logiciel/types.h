@@ -4,11 +4,12 @@
 // standard libraries
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 
-// booléen
-#define BOOL char
-#define FALSE 0
-#define TRUE 1
+// booléen (défini dans windows.h, redondant)
+// #define BOOL char
+// #define FALSE 0
+// #define TRUE 1
 
 // liste chaînée de décimaux
 typedef struct _LL_FLOAT_NODE {

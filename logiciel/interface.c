@@ -4,7 +4,7 @@
 #include "types.h"
 #include "interface.h"
 
-int interface_colle(float volume_pots)
+void interface_colle(float *volume_pots);
 {
 
     char caractere_entre;
@@ -35,7 +35,7 @@ int interface_colle(float volume_pots)
     }
 }
 
-int interface_rouleaux(LL_ROULEAU ROULEAU)
+void interface_rouleaux(LL_ROULEAU *ROULEAU);
 {
     char caractere_entre;
     BOOL caractere_valide;

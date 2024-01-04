@@ -47,7 +47,8 @@ void interface_rouleaux(LL_ROULEAU *ROULEAU);
     scanf("%d", &nombre_types);
     for (indice_rouleau = 0; indice_rouleau < longueur(nombre_types) - 1; indice_rouleau++)
     {
-        rouleau = create_rouleau(ROULEAU);
+        LL_ROULEAU liste_rouleau = llr_create();
+        ROULEAU nouveau_rouleau;
         // rouleau <- NOUVEAU rouleau
         printf("Dimension rouleaux papier peints : ");
         printf("Largeur : ");
@@ -56,7 +57,7 @@ void interface_rouleaux(LL_ROULEAU *ROULEAU);
         scanf("%d", &rouleau.longueur);
         printf("Motif ? [O]ui/ [N]on");
         caractere_valide = FALSE;
-        while (caractere_valide == FALSE)
+        while(caractere_valide == FALSE)
         {
             scanf("%c", &caractere_entre);
             if (caractere_entre == 'o' || caractere_entre == 'n')
@@ -75,9 +76,9 @@ void interface_rouleaux(LL_ROULEAU *ROULEAU);
         }
         rouleau.longueur_restante = 0;
         rouleau.quantité = 0;
-        rouleau.liste_chutes = create_liste_chutes(ROULEAU);
-        ajouter(liste_rouleaux(ROULEAU), rouleau);
+        LL_ROULEAU liste_chutes = llr_create();
         // rouleau.liste_chutes <- créer()
+        llr_append(&liste_rouleau, nouveau_rouleau);        
         // ajouter(liste_rouleau, rouleau)
     }
 }

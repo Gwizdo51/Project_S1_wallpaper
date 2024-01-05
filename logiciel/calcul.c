@@ -64,18 +64,18 @@ void calcul_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
 }
 
 
-void calcul_assemblage_le(SerieMur liste_series_murs[], Rouleau liste_rouleau[]) {
+void calcul_assemblage_le(SERIE_MURS *liste_series_murs, ROULEAU *liste_rouleau) {
     int indice_serie_mur, indice_mur, indice_le_i, indice_le_j;
     float hauteur_motif;
-    Mur mur_actuel;
-    Le le_actuel, le_compare;
-    bool les_tous_assembles;
+    MUR mur_actuel;
+    LE le_actuel, le_compare;
+    BOOL les_tous_assembles;
 
-    for (indice_serie_mur = 0; indice_serie_mur < strlen(liste_series_murs.serie_murs); indice_serie_mur++) {
+    for (indice_serie_mur = 0; indice_serie_mur < llm_length(liste_series_murs.serie_murs); indice_serie_mur++) {
         hauteur_motif = liste_rouleau[liste_series_murs[indice_serie_mur].type_papier_peint].hauteur_motif;
 
         if (hauteur_motif > 0) {
-            for (indice_mur = 0; indice_mur < strlen(liste_series_murs.serie_murs)[indice_serie_mur].liste_murs; indice_mur++) {
+            for (indice_mur = 0; indice_mur < strlen(liste_series_murs.serie_murs[indice_serie_mur].liste_murs; indice_mur++) {
                 mur_actuel = liste_series_murs[indice_serie_mur].liste_murs[indice_mur];
                 les_tous_assembles = false;
 
@@ -184,10 +184,10 @@ void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float
 }
 
 
-void calcul_decoupage_le(SerieMur liste_series_murs[], Rouleau liste_rouleaux[]) {
+void calcul_decoupage_le(SERIE_MURS *liste_series_murs[], ROULEAU *liste_rouleaux[]) {
     int indice_serie_murs, indice_mur, indice_le;
-    Mur mur_actuel;
-    Le le_actuel;
+    MUR mur_actuel;
+    LE le_actuel;
     float hauteur_le_initial, largeur_le_initial, X_le_initial, longueur_motif, hauteur_totale_decoupee;
 
     for (indice_serie_murs = 0; indice_serie_murs < strlen(liste_series_murs.serie_murs); indice_serie_murs++) {

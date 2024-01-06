@@ -65,7 +65,7 @@ void llr_remove(LL_ROULEAU *linked_list, int index) {
         LL_ROULEAU_NODE *next_node = node_to_remove->next_node;
         previous_node->next_node = next_node;
     }
-    free(node_to_remove->data.liste_chutes);
+    llf_free(&node->data.liste_chutes);
     free(node_to_remove);
 }
 

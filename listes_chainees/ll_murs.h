@@ -2,6 +2,8 @@
 #define _HEADER_LL_MURS
 
 #include "..\logiciel\types.h"
+#include "ll_les.h"
+#include "ll_obstacles.h"
 
 LL_MUR llm_create();
 int llm_length(LL_MUR *linked_list);

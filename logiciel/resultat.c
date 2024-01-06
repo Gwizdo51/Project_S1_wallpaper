@@ -9,7 +9,7 @@ int resultat(LL_ROULEAU *liste_rouleaux, float *quantite_colle, int *nombre_pots
     printf("4) RESULTAT \n");
     printf("Nombre de rouleaux : \n");
 
-    for (int i = 0; i < llr_lenght(liste_rouleaux) - 1; i++)
+    for (int i = 0; i < llr_length(liste_rouleaux) - 1; i++)
     {
         // printf("PAPIER PEINT #", "%i", ":", obtenir (liste_rouleaux i.quantité_rouleaux));
         printf("PAPIER PEINT #", "%i", ":", llr_get(liste_rouleaux, i).quantité_rouleaux);

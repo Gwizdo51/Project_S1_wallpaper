@@ -104,20 +104,20 @@ void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *volume_pots, float *q
 {
     int indice_mur, indice_obstacle, indice_serie_mur;
     float surface_totale_mur;
-    mur *mur_actuel;
+    MUR *mur_actuel;
 
     surface_totale_mur = 0;
     for (indice_serie_mur = 0; indice_serie_mur < (liste_series_murs)-1; indice_serie_mur++)
     {
-        for (indice_mur = 0; indice_mur < llsm_lenght(liste_series_murs, indice_serie_mur).liste_mur - 1; indice_mur++)
+        for (indice_mur = 0; indice_mur < llsm_length(liste_series_murs, indice_serie_mur).liste_mur - 1; indice_mur++)
         {
             mur_actuel = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs, indice_mur);
             // *mur_actuel = liste_series_murs(indice_serie_mur).liste_mur(indice_mur);
             surface_totale_mur = surface_totale_mur + mur_actuel->hauteur * mur_actuel->largeur;
-            for (indice_obstacle = 0; indice_obstacle < llo_lenght(mur_actuel->liste_obstacles) - 1; indice_obstacle++)
+            for (indice_obstacle = 0; indice_obstacle < llo_length(mur_actuel->liste_obstacles) - 1; indice_obstacle++)
             {
                 // surface_totale_mur = surface_totale_mur - mur_actuel.liste_obstacles(indice_obstacle).hauteur * mur_actuel.liste_obstacles(indice_obstacle).largeur;
-                surface_totale_mur = surface_totale_mur - llo_get(&(llm_get(liste_obstacles, indice_obstacle))->hauteur) * llo_get(&llm_get(liste_obstacles, indice_obstacle)->largeur);
+                surface_totale_mur -= (llo_get(&mur_actuel->liste_obstacles, indice_obstacle))->hauteur * (llo_get(&mur_actuel->liste_obstacles, indice_obstacle))->largeur
             }
             surface_totale_mur = surface_totale_mur - mur_actuel.hauteur_pan_gauche * mur_actuel.largeur_pan_gauche / 2;
             surface_totale_mur = surface_totale_mur - mur_actuel.hauteur_pan_droite * mur_actuel.largeur_pan_droite / 2;

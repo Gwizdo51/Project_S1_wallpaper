@@ -45,7 +45,7 @@ void interface_rouleaux(LL_ROULEAU *ROULEAU);
     printf("1) INVENTAIRE PAPIER PEINT");
     printf("Nombre de type de papier peints differents : ");
     scanf("%d", &nombre_types);
-    for (indice_rouleau = 0; indice_rouleau < longueur(nombre_types) - 1; indice_rouleau++)
+    for (indice_rouleau = 0; indice_rouleau < llr_length(nombre_types) - 1; indice_rouleau++)
     {
         LL_ROULEAU liste_rouleau = llr_create();
         ROULEAU nouveau_rouleau;

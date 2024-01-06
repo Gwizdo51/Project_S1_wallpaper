@@ -100,7 +100,7 @@ void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
 }
 
 
-void calcul_decoupage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
+void calcul_decoupage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
     // variables
     int indice_serie_murs, indice_mur, indice_le;
     MUR *mur_actuel_pointeur;
@@ -146,7 +146,7 @@ void calcul_decoupage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rou
 }
 
 
-void calcul_assemblage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
+void calcul_assemblage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
     // variables
     int indice_serie_murs, indice_mur, indice_le_i, indice_le_j;
     float longueur_motif;

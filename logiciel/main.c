@@ -18,7 +18,7 @@ int main() {
     calcul_les(&liste_series_murs, &liste_rouleaux);
     calcul_pans_coupes(&liste_series_murs);
     calcul_decoupage_les(&liste_series_murs, &liste_rouleaux);
-    calcul_obstacle(&liste_series_murs, &quantite_colle, &volume_pots, &nombre_pots);
+    calcul_obstacles(&liste_series_murs, &liste_rouleaux);
     calcul_assemblage_les(&liste_series_murs, &liste_rouleaux);
     calcul_tapissage(&liste_series_murs, &liste_rouleaux);
     calcul_colle(&liste_series_murs, &quantite_colle, &volume_pots, &nombre_pots);

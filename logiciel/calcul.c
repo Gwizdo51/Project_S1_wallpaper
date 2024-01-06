@@ -146,6 +146,79 @@ void calcul_decoupage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_ro
 }
 
 
+void calcul_obstacles(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
+    // variables
+    int indice_serie_murs, indice_mur, indice_obstacle, indice_le;
+    MUR *mur_actuel_pointeur;
+    LE *le_actuel_pointeur;
+    OBSTACLE *obstacle_actuel_pointeur;
+    BOOL obstacle_recouvre_le;
+    LE nouveau_le;
+
+    // pour chaque mur ...
+    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel_pointeur = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
+            // si le papier peint a des motifs ...
+            if (llr_get(liste_rouleaux, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint)->longueur_motif > 0) {
+                // on retire les lés de la liste de lés si ils sont recouverts sur toute leur surface
+                for (indice_obstacle = 0; indice_obstacle < llo_length(&mur_actuel_pointeur->liste_obstacles); indice_obstacle++) {
+                    obstacle_actuel_pointeur = llo_get(&mur_actuel_pointeur->liste_obstacles, indice_obstacle);
+                    obstacle_recouvre_le = TRUE;
+                    while (obstacle_recouvre_le) {
+                        obstacle_actuel_pointeur = FALSE;
+                        for (indice_le = 0; indice_le < lll_length(&mur_actuel_pointeur->liste_les); indice_le++) {
+                            le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le);
+                            if (
+                                le_actuel_pointeur->X >= obstacle_actuel_pointeur->X &&
+                                le_actuel_pointeur->X + le_actuel_pointeur->largeur <= obstacle_actuel_pointeur->X + obstacle_actuel_pointeur->largeur &&
+                                le_actuel_pointeur->Y >= obstacle_actuel_pointeur->Y &&
+                                le_actuel_pointeur->Y + le_actuel_pointeur->hauteur <= obstacle_actuel_pointeur->Y + obstacle_actuel_pointeur->hauteur
+                            ) {
+                                obstacle_recouvre_le = TRUE;
+                                lll_remove(&mur_actuel_pointeur->liste_les, indice_le);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            // si le papier peint n'a pas de motifs ...
+            else {
+                // on sépare le lé en 2 lés distincts si ils sont recouverts sur toute leur largeur
+                for (indice_obstacle = 0; indice_obstacle < llo_length(&mur_actuel_pointeur->liste_obstacles); indice_obstacle++) {
+                    obstacle_actuel_pointeur = llo_get(&mur_actuel_pointeur->liste_obstacles, indice_obstacle);
+                    obstacle_recouvre_le = TRUE;
+                    while (obstacle_recouvre_le) {
+                        obstacle_recouvre_le = FALSE;
+                        for (indice_le = 0; indice_le < lll_length(&mur_actuel_pointeur->liste_les); indice_le++) {
+                            le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le);
+                            if (
+                                le_actuel_pointeur->X >= obstacle_actuel_pointeur->X &&
+                                le_actuel_pointeur->X + le_actuel_pointeur->largeur <= obstacle_actuel_pointeur->X + obstacle_actuel_pointeur->largeur &&
+                                le_actuel_pointeur->Y <= obstacle_actuel_pointeur->Y &&
+                                le_actuel_pointeur->Y + le_actuel_pointeur->hauteur >= obstacle_actuel_pointeur->Y + obstacle_actuel_pointeur->hauteur
+                            ) {
+                                obstacle_recouvre_le = TRUE;
+                                // on crée un nouveau lé au-dessus de l’obstacle, qu’on ajoute à la liste
+                                nouveau_le.X = le_actuel_pointeur->X;
+                                nouveau_le.Y = obstacle_actuel_pointeur->Y + obstacle_actuel_pointeur->hauteur;
+                                nouveau_le.largeur = le_actuel_pointeur->largeur;
+                                nouveau_le.hauteur = le_actuel_pointeur->hauteur - obstacle_actuel_pointeur->hauteur - (obstacle_actuel_pointeur->Y - le_actuel_pointeur->Y);
+                                lll_append(&mur_actuel_pointeur->liste_les, nouveau_le);
+                                // on réduit la hauteur du lé en dessous de l’obstacle
+                                le_actuel_pointeur->hauteur = obstacle_actuel_pointeur->Y - le_actuel_pointeur->Y;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 void calcul_assemblage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
     // variables
     int indice_serie_murs, indice_mur, indice_le_i, indice_le_j;

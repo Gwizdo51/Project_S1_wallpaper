@@ -186,7 +186,7 @@ void interface_murs(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau)
             // - le mur est indiqué comme étant adjacent au mur précédent
             // sinon, on crée une nouvelle série de murs
             ajouter_a_serie_precedente = FALSE;
-            if ((indice_mur != 0) && (llr_get(liste_rouleau, indice_rouleau_utilise)->longueur_motif > 0) && (serie_murs_actuelle.type_papier_peint == indice_rouleau_utilise)) {
+            if (indice_mur != 0 && llr_get(liste_rouleau, indice_rouleau_utilise)->longueur_motif > 0 && serie_murs_actuelle.type_papier_peint == indice_rouleau_utilise) {
                 caractere_valide = FALSE;
                 printf("Le mur est-il adjacent au mur precedent ? [O]ui/[N]on\n");
                 while (!caractere_valide) {

@@ -100,7 +100,7 @@ void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
 }
 
 
-void calcul_colle(LL_SERIE_MURS_NODE liste_series_murs, float *volume_pots, float *quantite_colle, int nombre_pots)
+void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *volume_pots, float *quantite_colle, int nombre_pots)
 {
     int indice_mur, indice_obstacle, indice_serie_mur;
     float surface_totale_mur;
@@ -109,11 +109,11 @@ void calcul_colle(LL_SERIE_MURS_NODE liste_series_murs, float *volume_pots, floa
     surface_totale_mur = 0;
     for (indice_serie_mur = 0; indice_serie_mur < (liste_series_murs)-1; indice_serie_mur++)
     {
-        for (indice_mur = 0; indice_mur < longueur(liste_series_murs, indice_serie_mur).liste_mur - 1; indice_mur++)
+        for (indice_mur = 0; indice_mur < llsm_lenght(liste_series_murs, indice_serie_mur).liste_mur - 1; indice_mur++)
         {
             *mur_actuel = liste_series_murs(indice_serie_mur).liste_mur(indice_mur);
-            surface_totale_mur = surface_totale_mur + (*mur_actuel).hauteur * (*mur_actuel).largeur;
-            for (indice_obstacle = 0; indice_obstacle < longueur(mur_actuel.liste_obstacles) - 1; indice_obstacle++)
+            surface_totale_mur = surface_totale_mur + mur_actuel->hauteur * mur_actuel->largeur;
+            for (indice_obstacle = 0; indice_obstacle < llo_lenght(mur_actuel->liste_obstacles) - 1; indice_obstacle++)
             {
                 surface_totale_mur = surface_totale_mur - mur_actuel.liste_obstacles(indice_obstacle).hauteur * mur_actuel.liste_obstacles(indice_obstacle).largeur;
             }
@@ -124,6 +124,6 @@ void calcul_colle(LL_SERIE_MURS_NODE liste_series_murs, float *volume_pots, floa
     *quantite_colle = surface_totale_mur * 0.002;
     if (*volume_pots != 0)
     {
-        nombre_pots = ceiling(*quantite_colle / *volume_pots);
+        nombre_pots = ceilf(*quantite_colle / *volume_pots);
     }
 }

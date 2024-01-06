@@ -100,45 +100,54 @@ void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
 }
 
 
-void calcul_assemblage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau) {
+void calcul_assemblage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
+    // variables
     int indice_serie_murs, indice_mur, indice_le_i, indice_le_j;
-    float hauteur_motif;
+    float longueur_motif;
     MUR *mur_actuel_pointeur;
     LE *le_actuel_pointeur, *le_compare_pointeur;
     BOOL les_tous_assembles;
 
-    for (indice_serie_murs = 0; indice_serie_murs < llm_length(liste_series_murs); indice_serie_murs++) {
-        hauteur_motif = llr_get(liste_rouleau, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint);
-
-        if (hauteur_motif > 0) {
-            for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs); indice_mur++) {
-                mur_actuel_pointeur = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs, indice_mur);
+    // pour chaque mur, si le papier peint a un motif ...
+    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
+        longueur_motif = llr_get(liste_rouleaux, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint)->longueur_motif;
+        if (longueur_motif > 0) {
+            for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+                mur_actuel_pointeur = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
+                // tant que des lés du mur sont assemblables ...
                 les_tous_assembles = FALSE;
-
                 while (!les_tous_assembles) {
+                    // on suppose que tous les lés sont assemblés
                     les_tous_assembles = TRUE;
-
+                    // pour chaque paire de lés ...
                     for (indice_le_i = 0; indice_le_i < lll_length(&mur_actuel_pointeur->liste_les) - 1; indice_le_i++) {
                         le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le_i);
-
                         for (indice_le_j = indice_le_i + 1; indice_le_j < lll_length(&mur_actuel_pointeur->liste_les); indice_le_j++) {
                             le_compare_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le_j);
-
+                            // si les deux lés ont la même coordonnées X ...
                             if (le_actuel_pointeur->X == le_compare_pointeur->X) {
-                                if (le_actuel_pointeur->Y == le_compare_pointeur->Y + hauteur_motif) {
+                                // si le lé comparé est juste au dessus du lé actuel ...
+                                if (le_compare_pointeur->Y == le_actuel_pointeur->Y + le_actuel_pointeur->hauteur) {
+                                    // les deux lés sont assemblables
                                     les_tous_assembles = FALSE;
+                                    // on donne comme hauteur au lé du dessous (le lé actuel) la somme des hauteurs des deux lés
                                     le_actuel_pointeur->hauteur += le_compare_pointeur->hauteur;
+                                    // on supprime le lé du dessus (le lé comparé) de la liste
                                     lll_remove(&mur_actuel_pointeur->liste_les, indice_le_j);
                                     break;
-                                } else if (le_actuel_pointeur->Y == le_compare_pointeur->Y - hauteur_motif) {
+                                }
+                                // sinon, si le lé actuel est juste au dessus du lé comparé ...
+                                else if (le_actuel_pointeur->Y == le_compare_pointeur->Y + le_compare_pointeur->hauteur) {
+                                    // les deux lés sont assemblables
                                     les_tous_assembles = FALSE;
-                                    le_actuel_pointeur->hauteur -= le_compare_pointeur->hauteur;
-                                    lll_remove(&mur_actuel_pointeur->liste_les, indice_le_j);
+                                    // on donne comme hauteur au lé du dessous (le lé comparé) la somme des hauteurs des deux lés
+                                    le_compare_pointeur->hauteur += le_actuel_pointeur->hauteur;
+                                    // on supprime le lé du dessus (le lé actuel) de la liste
+                                    lll_remove(&mur_actuel_pointeur->liste_les, indice_le_i);
                                     break;
                                 }
                             }
                         }
-
                         if (!les_tous_assembles) {
                             break;
                         }
@@ -151,6 +160,7 @@ void calcul_assemblage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_ro
 
 
 void calcul_decoupage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
+    // variables
     int indice_serie_murs, indice_mur, indice_le;
     MUR *mur_actuel_pointeur;
     LE *le_actuel_pointeur;

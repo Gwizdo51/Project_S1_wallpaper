@@ -205,49 +205,14 @@ void calcul_assemblage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_r
 }
 
 
-void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float *volume_pots, int *nombre_pots) {
-    // variables
-    int indice_mur, indice_obstacle, indice_serie_murs;
-    float surface_totale;
-    MUR *mur_actuel;
-
-    surface_totale = 0;
-    // pour chaque mur ...
-    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
-        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
-            mur_actuel = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
-            // on ajoute la surface du mur à la surface totale
-            surface_totale += mur_actuel->hauteur * mur_actuel->largeur;
-            // on retire la surface de chaque obstacle du mur à la surface totale
-            for (indice_obstacle = 0; indice_obstacle < llo_length(&mur_actuel->liste_obstacles); indice_obstacle++) {
-                surface_totale -= llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->hauteur * llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->largeur;
-            }
-            // on retire la surface des pans coupés à la surface totale
-            surface_totale -= mur_actuel->hauteur_pan_gauche * mur_actuel->largeur_pan_gauche / 2;
-            surface_totale -= mur_actuel->hauteur_pan_droit * mur_actuel->largeur_pan_droit / 2;
-        }
-    }
-    // calcul de la quantité de colle (en m3)
-    *quantite_colle = surface_totale * 0.002;
-    // calcul du nombre de pots
-    if (*volume_pots != 0) {
-        *nombre_pots = (int) ceilf(*quantite_colle / *volume_pots);
-    }
-    else {
-        *nombre_pots = 0;
-    }
-}
-
-
 void calcul_tapissage(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
-    //variables
+    // variables
     int indice_rouleau, indice_serie_murs, indice_mur, indice_chute, indice_le;
     ROULEAU *rouleau_actuel_pointeur;
     LE *le_actuel_pointeur;
     BOOL chute_utilisable;
     MUR *mur_actuel_pointeur;
 
-    //Début
     for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++){
 
         rouleau_actuel_pointeur = llr_get(liste_rouleaux, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint);
@@ -284,4 +249,38 @@ void calcul_tapissage(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_roulea
                 }
             }
         }
+}
+
+
+void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float *volume_pots, int *nombre_pots) {
+    // variables
+    int indice_mur, indice_obstacle, indice_serie_murs;
+    float surface_totale;
+    MUR *mur_actuel;
+
+    surface_totale = 0;
+    // pour chaque mur ...
+    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
+            // on ajoute la surface du mur à la surface totale
+            surface_totale += mur_actuel->hauteur * mur_actuel->largeur;
+            // on retire la surface de chaque obstacle du mur à la surface totale
+            for (indice_obstacle = 0; indice_obstacle < llo_length(&mur_actuel->liste_obstacles); indice_obstacle++) {
+                surface_totale -= llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->hauteur * llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->largeur;
+            }
+            // on retire la surface des pans coupés à la surface totale
+            surface_totale -= mur_actuel->hauteur_pan_gauche * mur_actuel->largeur_pan_gauche / 2;
+            surface_totale -= mur_actuel->hauteur_pan_droit * mur_actuel->largeur_pan_droit / 2;
+        }
+    }
+    // calcul de la quantité de colle (en m3)
+    *quantite_colle = surface_totale * 0.002;
+    // calcul du nombre de pots
+    if (*volume_pots != 0) {
+        *nombre_pots = (int) ceilf(*quantite_colle / *volume_pots);
+    }
+    else {
+        *nombre_pots = 0;
+    }
 }

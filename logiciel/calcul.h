@@ -9,6 +9,8 @@
 
 void calcul_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux);
 void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs);
+void calcul_decoupage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux);
+void calcul_assemblage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux);
 void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float *volume_pots, int *nombre_pots);
 
 #endif

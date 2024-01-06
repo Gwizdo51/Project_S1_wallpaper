@@ -25,7 +25,7 @@ int main() {
 
     // affichage et enregistrement du résultat
     enregistrer_resultat(&liste_rouleaux, &quantite_colle, &nombre_pots, &nom_fichier_resultat);
-    afficher_resultat(&liste_rouleaux, &quantite_colle, &nombre_pots, &nom_fichier_resultat);
+    afficher_resultat(&liste_rouleaux, &quantite_colle, &nombre_pots, nom_fichier_resultat);
 
     return EXIT_SUCCESS;
 }

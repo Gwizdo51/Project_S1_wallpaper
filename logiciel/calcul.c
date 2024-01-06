@@ -64,40 +64,40 @@ void calcul_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
 }
 
 
-void calcul_assemblage_le(SERIE_MURS *liste_series_murs, ROULEAU *liste_rouleau) {
-    int indice_serie_mur, indice_mur, indice_le_i, indice_le_j;
+void calcul_assemblage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau) {
+    int indice_serie_murs, indice_mur, indice_le_i, indice_le_j;
     float hauteur_motif;
-    MUR mur_actuel;
-    LE le_actuel, le_compare;
+    MUR *mur_actuel_pointeur;
+    LE *le_actuel_pointeur, *le_compare_pointeur;
     BOOL les_tous_assembles;
 
-    for (indice_serie_mur = 0; indice_serie_mur < llm_length(liste_series_murs.serie_murs); indice_serie_mur++) {
-        hauteur_motif = liste_rouleau[liste_series_murs[indice_serie_mur].type_papier_peint].hauteur_motif;
+    for (indice_serie_murs = 0; indice_serie_murs < llm_length(liste_series_murs); indice_serie_murs++) {
+        hauteur_motif = llr_get(liste_rouleau, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint);
 
         if (hauteur_motif > 0) {
-            for (indice_mur = 0; indice_mur < strlen(liste_series_murs.serie_murs[indice_serie_mur].liste_murs; indice_mur++) {
-                mur_actuel = liste_series_murs[indice_serie_mur].liste_murs[indice_mur];
-                les_tous_assembles = false;
+            for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs); indice_mur++) {
+                mur_actuel_pointeur = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs, indice_mur);
+                les_tous_assembles = FALSE;
 
                 while (!les_tous_assembles) {
-                    les_tous_assembles = true;
+                    les_tous_assembles = TRUE;
 
-                    for (indice_le_i = 0; indice_le_i < strl(mur_actuel.liste_le) - 1; indice_le_i++) {
-                        le_actuel = mur_actuel.liste_le[indice_le_i];
+                    for (indice_le_i = 0; indice_le_i < lll_length(&mur_actuel_pointeur->liste_les) - 1; indice_le_i++) {
+                        le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le_i);
 
-                        for (indice_le_j = indice_le_i + 1; indice_le_j < strlen(mur_actuel.liste_le); indice_le_j++) {
-                            le_compare = mur_actuel.liste_le[indice_le_j];
+                        for (indice_le_j = indice_le_i + 1; indice_le_j < lll_length(&mur_actuel_pointeur->liste_les); indice_le_j++) {
+                            le_compare_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le_j);
 
-                            if (le_actuel.x == le_compare.x) {
-                                if (le_actuel.y == le_compare.y + hauteur_motif) {
-                                    les_tous_assembles = false;
-                                    le_actuel.hauteur += le_compare.hauteur;
-                                    supprimer(mur_actuel.liste_le, indice_le_j);
+                            if (le_actuel_pointeur->X == le_compare_pointeur->X) {
+                                if (le_actuel_pointeur->Y == le_compare_pointeur->Y + hauteur_motif) {
+                                    les_tous_assembles = FALSE;
+                                    le_actuel_pointeur->hauteur += le_compare_pointeur->hauteur;
+                                    lll_remove(&mur_actuel_pointeur->liste_les, indice_le_j);
                                     break;
-                                } else if (le_actuel.y == le_compare.y - hauteur_motif) {
-                                    les_tous_assembles = false;
-                                    le_actuel.hauteur -= le_compare.hauteur;
-                                    supprimer(mur_actuel.liste_le, indice_le_j);
+                                } else if (le_actuel_pointeur->Y == le_compare_pointeur->Y - hauteur_motif) {
+                                    les_tous_assembles = FALSE;
+                                    le_actuel_pointeur->hauteur -= le_compare_pointeur->hauteur;
+                                    lll_remove(&mur_actuel_pointeur->liste_les, indice_le_j);
                                     break;
                                 }
                             }
@@ -186,35 +186,44 @@ void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float
 
 void calcul_decoupage_le(SERIE_MURS *liste_series_murs[], ROULEAU *liste_rouleaux[]) {
     int indice_serie_murs, indice_mur, indice_le;
-    MUR mur_actuel;
-    LE le_actuel;
+    MUR *mur_actuel_pointeur;
+    LE *le_actuel_pointeur;
+    LE nouveau_le;
     float hauteur_le_initial, largeur_le_initial, X_le_initial, longueur_motif, hauteur_totale_decoupee;
 
-    for (indice_serie_murs = 0; indice_serie_murs < strlen(liste_series_murs.serie_murs); indice_serie_murs++) {
-        longueur_motif = liste_rouleaux[liste_series_murs.serie_murs[indice_serie_murs].type_papier_peint].longueur_motif;
+    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
+        // on ne découpe les lés que si le rouleau a un motif
+        longueur_motif = llr_get(liste_rouleau, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint);
 
         if (longueur_motif > 0) {
-            for (indice_mur = 0; indice_mur < strlen(liste_series_murs.serie_murs[indice_serie_murs].liste_murs); indice_mur++) {
-                mur_actuel = liste_series_murs.serie_murs[indice_serie_murs].liste_murs[indice_mur];
+            for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs); indice_mur++) {
+                mur_actuel_pointeur = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs, indice_mur);
+                // pour chaque lé de la liste initiale (la liste va grandir au cours de l’algo) ...
 
-                for (indice_le = 0; indice_le < strlen(mur_actuel.liste_le); indice_le++) {
-                    le_actuel = mur_actuel.liste_le[indice_le];
-                    hauteur_le_initial = le_actuel.hauteur;
-                    largeur_le_initial = le_actuel.largeur;
-                    X_le_initial = le_actuel.X;
-                    le_actuel.hauteur = longueur_motif;
+                for (indice_le = 0; indice_le < lll_length(&mur_actuel_pointeur->liste_les); indice_le++) {
+                    le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le);
+                    // on conserve les grandeurs associées au lé
+                    hauteur_le_initial = le_actuel_pointeur->hauteur;
+                    largeur_le_initial = le_actuel_pointeur->largeur;
+                    X_le_initial = le_actuel_pointeur->X;
+                    // on définit la hauteur du lé initial à la longueur du motif
+                    le_actuel_pointeur->hauteur = longueur_motif;
+                    // on initialise la hauteur du lé déjà découpé à la longueur du motif
                     hauteur_totale_decoupee = longueur_motif;
 
+                    // tant qu’on a pas découpé toute la hauteur du lé initial ...
                     while (hauteur_totale_decoupee < hauteur_le_initial) {
-                        Le nouveau_le;
+                        // nouveau lé une longueur de motif au-dessus du précédent
                         nouveau_le.X = X_le_initial;
-                        nouveau_le.Y = le_actuel.Y + longueur_motif;
+                        nouveau_le.Y = le_actuel_pointeur->Y + longueur_motif;
                         nouveau_le.largeur = largeur_le_initial;
                         nouveau_le.hauteur = longueur_motif;
-                        ajouter(&mur_actuel.liste_le, nouveau_le);
-
+                        // on ajoute le lé créé à la fin de la liste des lés
+                        lll_append(&mur_actuel_pointeur->liste_les, nouveau_le);
+                        // on incrémente la hauteur totale découpée d’une longueur de motif
                         hauteur_totale_decoupee += longueur_motif;
-                        le_actuel = nouveau_le;
+                        // on passe au lé suivant
+                        le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, lll_length(&mur_actuel_pointeur->liste_les) - 1);
                     }
                 }
             }

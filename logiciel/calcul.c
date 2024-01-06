@@ -64,6 +64,42 @@ void calcul_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
 }
 
 
+void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
+    // variables
+    int indice_serie_murs, indice_mur, indice_le;
+    MUR *mur_actuel_pointeur;
+    LE *le_actuel_pointeur;
+
+    // pour chaque série de murs ...
+    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
+        // pour chaque mur de la série ...
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel_pointeur = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
+            // pour chaque lé du mur ...
+            for (indice_le = 0; indice_le < lll_length(&mur_actuel_pointeur->liste_les); indice_le++) {
+                le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le);
+                // si le lé est complètement en dessous du pan coupé gauche ...
+                if (le_actuel_pointeur->X + le_actuel_pointeur->largeur < mur_actuel_pointeur->largeur_pan_gauche) {
+                    // on donne au lé la hauteur de son bord droit
+                    le_actuel_pointeur->hauteur = mur_actuel_pointeur->hauteur_pan_gauche +
+                                                  (mur_actuel_pointeur->hauteur - mur_actuel_pointeur->hauteur_pan_gauche) *
+                                                  (le_actuel_pointeur->X + le_actuel_pointeur->largeur) /
+                                                  mur_actuel_pointeur->hauteur_pan_gauche;
+                }
+                // si le lé est complètement en dessous du pan coupé droit ...
+                else if (le_actuel_pointeur->X > mur_actuel_pointeur->largeur - mur_actuel_pointeur->hauteur_pan_droit) {
+                    // on donne au lé la hauteur de son bord gauche
+                    le_actuel_pointeur->hauteur = mur_actuel_pointeur->hauteur_pan_droit +
+                                                  (mur_actuel_pointeur->hauteur - mur_actuel_pointeur->hauteur_pan_droit) *
+                                                  (mur_actuel_pointeur->largeur - le_actuel_pointeur->X) /
+                                                  mur_actuel_pointeur->largeur_pan_droit;
+                }
+            }
+        }
+    }
+}
+
+
 void calcul_assemblage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau) {
     int indice_serie_murs, indice_mur, indice_le_i, indice_le_j;
     float hauteur_motif;
@@ -114,77 +150,7 @@ void calcul_assemblage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_ro
 }
 
 
-void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
-    // variables
-    int indice_serie_murs, indice_mur, indice_le;
-    MUR *mur_actuel_pointeur;
-    LE *le_actuel_pointeur;
-
-    // pour chaque série de murs ...
-    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
-        // pour chaque mur de la série ...
-        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
-            mur_actuel_pointeur = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
-            // pour chaque lé du mur ...
-            for (indice_le = 0; indice_le < lll_length(&mur_actuel_pointeur->liste_les); indice_le++) {
-                le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le);
-                // si le lé est complètement en dessous du pan coupé gauche ...
-                if (le_actuel_pointeur->X + le_actuel_pointeur->largeur < mur_actuel_pointeur->largeur_pan_gauche) {
-                    // on donne au lé la hauteur de son bord droit
-                    le_actuel_pointeur->hauteur = mur_actuel_pointeur->hauteur_pan_gauche +
-                                                  (mur_actuel_pointeur->hauteur - mur_actuel_pointeur->hauteur_pan_gauche) *
-                                                  (le_actuel_pointeur->X + le_actuel_pointeur->largeur) /
-                                                  mur_actuel_pointeur->hauteur_pan_gauche;
-                }
-                // si le lé est complètement en dessous du pan coupé droit ...
-                else if (le_actuel_pointeur->X > mur_actuel_pointeur->largeur - mur_actuel_pointeur->hauteur_pan_droit) {
-                    // on donne au lé la hauteur de son bord gauche
-                    le_actuel_pointeur->hauteur = mur_actuel_pointeur->hauteur_pan_droit +
-                                                  (mur_actuel_pointeur->hauteur - mur_actuel_pointeur->hauteur_pan_droit) *
-                                                  (mur_actuel_pointeur->largeur - le_actuel_pointeur->X) /
-                                                  mur_actuel_pointeur->largeur_pan_droit;
-                }
-            }
-        }
-    }
-}
-
-
-void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float *volume_pots, int *nombre_pots) {
-    // variables
-    int indice_mur, indice_obstacle, indice_serie_murs;
-    float surface_totale;
-    MUR *mur_actuel;
-
-    surface_totale = 0;
-    // pour chaque mur ...
-    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
-        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
-            mur_actuel = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
-            // on ajoute la surface du mur à la surface totale
-            surface_totale += mur_actuel->hauteur * mur_actuel->largeur;
-            // on retire la surface de chaque obstacle du mur à la surface totale
-            for (indice_obstacle = 0; indice_obstacle < llo_length(&mur_actuel->liste_obstacles); indice_obstacle++) {
-                surface_totale -= llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->hauteur * llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->largeur;
-            }
-            // on retire la surface des pans coupés à la surface totale
-            surface_totale -= mur_actuel->hauteur_pan_gauche * mur_actuel->largeur_pan_gauche / 2;
-            surface_totale -= mur_actuel->hauteur_pan_droit * mur_actuel->largeur_pan_droit / 2;
-        }
-    }
-    // calcul de la quantité de colle (en m3)
-    *quantite_colle = surface_totale * 0.002;
-    // calcul du nombre de pots
-    if (*volume_pots != 0) {
-        *nombre_pots = (int) ceilf(*quantite_colle / *volume_pots);
-    }
-    else {
-        *nombre_pots = 0;
-    }
-}
-
-
-void calcul_decoupage_le(SERIE_MURS *liste_series_murs[], ROULEAU *liste_rouleaux[]) {
+void calcul_decoupage_le(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
     int indice_serie_murs, indice_mur, indice_le;
     MUR *mur_actuel_pointeur;
     LE *le_actuel_pointeur;
@@ -228,5 +194,39 @@ void calcul_decoupage_le(SERIE_MURS *liste_series_murs[], ROULEAU *liste_rouleau
                 }
             }
         }
+    }
+}
+
+
+void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float *volume_pots, int *nombre_pots) {
+    // variables
+    int indice_mur, indice_obstacle, indice_serie_murs;
+    float surface_totale;
+    MUR *mur_actuel;
+
+    surface_totale = 0;
+    // pour chaque mur ...
+    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
+            // on ajoute la surface du mur à la surface totale
+            surface_totale += mur_actuel->hauteur * mur_actuel->largeur;
+            // on retire la surface de chaque obstacle du mur à la surface totale
+            for (indice_obstacle = 0; indice_obstacle < llo_length(&mur_actuel->liste_obstacles); indice_obstacle++) {
+                surface_totale -= llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->hauteur * llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->largeur;
+            }
+            // on retire la surface des pans coupés à la surface totale
+            surface_totale -= mur_actuel->hauteur_pan_gauche * mur_actuel->largeur_pan_gauche / 2;
+            surface_totale -= mur_actuel->hauteur_pan_droit * mur_actuel->largeur_pan_droit / 2;
+        }
+    }
+    // calcul de la quantité de colle (en m3)
+    *quantite_colle = surface_totale * 0.002;
+    // calcul du nombre de pots
+    if (*volume_pots != 0) {
+        *nombre_pots = (int) ceilf(*quantite_colle / *volume_pots);
+    }
+    else {
+        *nombre_pots = 0;
     }
 }

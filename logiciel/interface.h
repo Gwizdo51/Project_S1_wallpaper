@@ -8,7 +8,7 @@
 #include "..\listes_chainees\ll_obstacles.h"
 
 void interface_rouleaux(LL_ROULEAU *liste_rouleaux);
-void interface_colle(float *volume_pots);
 void interface_murs(LL_SERIE_MURS *liste_serie_murs, LL_ROULEAU *liste_rouleaux);
+void interface_colle(float *volume_pots);
 
 #endif

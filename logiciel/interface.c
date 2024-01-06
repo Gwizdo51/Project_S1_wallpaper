@@ -45,31 +45,6 @@ void interface_rouleaux(LL_ROULEAU *liste_rouleaux) {
 }
 
 
-void interface_colle(float *volume_pots) {
-    // variables
-    char caractere_entre;
-    BOOL caractere_valide;
-
-    printf("4) CONDITIONNEMENT COLLE\n");
-    printf("Est-ce que la colle est conditionnée ? [O]ui/ [N]on\n");
-    caractere_valide = FALSE;
-    while (!caractere_valide) {
-        // scanf("%c", &caractere_entre);
-        caractere_entre = _getch();
-        if (caractere_entre == 'o' || caractere_entre == 'n') {
-            caractere_valide = TRUE;
-        }
-    }
-    if (caractere_entre == 'o') {
-        printf("Entrez le volume de colle par pots : ");
-        scanf("%f", volume_pots);
-    }
-    else {
-        *volume_pots = 0;
-    }
-}
-
-
 void interface_murs(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau) {
     int nombre_pieces, indice_piece, nombre_murs, indice_mur, indice_rouleau_utilise, nb_pans, indice_pan, nb_obstacles, indice_obstacle;
     char caractere_entre;
@@ -243,7 +218,32 @@ void interface_murs(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau)
 
         }
     }
-    // on ajoute la dérnière série crée à la liste de séries de murs
+    // on ajoute la dernière série créée à la liste de séries de murs
     llsm_append(liste_series_murs, serie_murs_actuelle);
     return 0;
+}
+
+
+void interface_colle(float *volume_pots) {
+    // variables
+    char caractere_entre;
+    BOOL caractere_valide;
+
+    printf("4) CONDITIONNEMENT COLLE\n");
+    printf("Est-ce que la colle est conditionnée ? [O]ui/ [N]on\n");
+    caractere_valide = FALSE;
+    while (!caractere_valide) {
+        // scanf("%c", &caractere_entre);
+        caractere_entre = _getch();
+        if (caractere_entre == 'o' || caractere_entre == 'n') {
+            caractere_valide = TRUE;
+        }
+    }
+    if (caractere_entre == 'o') {
+        printf("Entrez le volume de colle par pots : ");
+        scanf("%f", volume_pots);
+    }
+    else {
+        *volume_pots = 0;
+    }
 }

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <math.h>
 
 // booléen (défini dans windows.h, redondant)
 // #define BOOL char

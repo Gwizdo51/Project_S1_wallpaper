@@ -1,5 +1,6 @@
 #include "ll_obstacles.h"
 
+
 LL_OBSTACLE llo_create() {
     LL_OBSTACLE linked_list = {
         .first_node = NULL
@@ -18,6 +19,7 @@ int llo_length(LL_OBSTACLE *linked_list) {
     return list_length;
 }
 
+
 void llo_append(LL_OBSTACLE *linked_list, OBSTACLE new_data) {
     if (!linked_list->first_node) {
         linked_list->first_node = (LL_OBSTACLE_NODE*) malloc(sizeof(LL_OBSTACLE_NODE));
@@ -34,6 +36,7 @@ void llo_append(LL_OBSTACLE *linked_list, OBSTACLE new_data) {
     }
 }
 
+
 OBSTACLE *llo_get(LL_OBSTACLE *linked_list, int index) {
     if (index >= llo_length(linked_list)) {
         exit(EXIT_FAILURE);
@@ -46,6 +49,7 @@ OBSTACLE *llo_get(LL_OBSTACLE *linked_list, int index) {
     }
     return &current_node->data;
 }
+
 
 void llo_remove(LL_OBSTACLE *linked_list, int index) {
     if (index >= llo_length(linked_list)) {
@@ -69,6 +73,7 @@ void llo_remove(LL_OBSTACLE *linked_list, int index) {
     free(node_to_remove);
 }
 
+
 void llo_free(LL_OBSTACLE *linked_list) {
     LL_OBSTACLE_NODE *current_node = linked_list->first_node, *next_node;
     while (current_node) {
@@ -78,4 +83,3 @@ void llo_free(LL_OBSTACLE *linked_list) {
     }
     linked_list->first_node = NULL;
 }
-

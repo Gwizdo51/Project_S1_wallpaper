@@ -1,11 +1,13 @@
 #include "ll_rouleaux.h"
 
+
 LL_ROULEAU llr_create() {
     LL_ROULEAU linked_list = {
         .first_node = NULL
     };
     return linked_list;
 }
+
 
 int llr_length(LL_ROULEAU *linked_list) {
     int list_length = 0;
@@ -16,6 +18,7 @@ int llr_length(LL_ROULEAU *linked_list) {
     }
     return list_length;
 }
+
 
 void llr_append(LL_ROULEAU *linked_list, ROULEAU new_data) {
     if (!linked_list->first_node) {
@@ -33,6 +36,7 @@ void llr_append(LL_ROULEAU *linked_list, ROULEAU new_data) {
     }
 }
 
+
 ROULEAU *llr_get(LL_ROULEAU *linked_list, int index) {
     if (index >= llr_length(linked_list)) {
         exit(EXIT_FAILURE);
@@ -45,6 +49,7 @@ ROULEAU *llr_get(LL_ROULEAU *linked_list, int index) {
     }
     return &current_node->data;
 }
+
 
 void llr_remove(LL_ROULEAU *linked_list, int index) {
     if (index >= llr_length(linked_list)) {
@@ -65,15 +70,20 @@ void llr_remove(LL_ROULEAU *linked_list, int index) {
         LL_ROULEAU_NODE *next_node = node_to_remove->next_node;
         previous_node->next_node = next_node;
     }
-    llf_free(&node->data.liste_chutes);
+    // free the node linked lists
+    llf_free(&node_to_remove->data.liste_chutes);
+    // free the removed node
     free(node_to_remove);
 }
+
 
 void llr_free(LL_ROULEAU *linked_list) {
     LL_ROULEAU_NODE *current_node = linked_list->first_node, *next_node;
     while (current_node) {
-        free(current_node->data.liste_chutes);
+        // free the node linked lists
+        llf_free(&current_node->data.liste_chutes);
         next_node = current_node->next_node;
+        // free the current node
         free(current_node);
         current_node = next_node;
     }

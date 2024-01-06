@@ -1,5 +1,6 @@
 #ifndef _HEADER_LL_OBSTACLE
 #define _HEADER_LL_OBSTACLE
+
 #include "..\logiciel\types.h"
 
 LL_OBSTACLE llo_create();

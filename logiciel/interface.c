@@ -15,7 +15,7 @@ void interface_colle(float *volume_pots);
 
     caractere_valide = FALSE;
 
-    while (caractere_valide == FALSE)
+    while (!caractere_valide)
     {
         scanf("%c", &caractere_entre);
         if (caractere_entre == 'o' || caractere_entre == 'n')

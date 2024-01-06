@@ -6,6 +6,8 @@
 #include "..\listes_chainees\ll_murs.h"
 #include "..\listes_chainees\ll_obstacles.h"
 #include "..\listes_chainees\ll_rouleaux.h"
+#include "..\listes_chainees\ll_les.h"
+#include "..\listes_chainees\ll_float.h"
 
 void calcul_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux);
 void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs);

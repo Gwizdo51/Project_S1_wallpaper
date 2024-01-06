@@ -207,48 +207,51 @@ void calcul_assemblage_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_r
 
 void calcul_tapissage(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
     // variables
-    int indice_rouleau, indice_serie_murs, indice_mur, indice_chute, indice_le;
+    int indice_serie_murs, indice_mur, indice_chute, indice_le;
     ROULEAU *rouleau_actuel_pointeur;
     LE *le_actuel_pointeur;
     BOOL chute_utilisable;
     MUR *mur_actuel_pointeur;
 
-    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++){
-
+    // pour chaque mur ...
+    for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
         rouleau_actuel_pointeur = llr_get(liste_rouleaux, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint);
-
-        for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs)->liste_murs)); indice_mur++){
-
+        for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs)->liste_murs)); indice_mur++) {
             mur_actuel_pointeur = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs)->liste_murs), indice_mur);
-
-            for (indice_le = 0; lll_length(&(mur_actuel_pointeur->liste_les)); indice_le++){
-
+            // pour chaque lé du mur ...
+            for (indice_le = 0; lll_length(&(mur_actuel_pointeur->liste_les)); indice_le++) {
                 le_actuel_pointeur = lll_get(&(mur_actuel_pointeur->liste_les), indice_le);
-                BOOL chute_utilisable = FALSE;
-
+                // on vérifie si le lé peut être recouvert par une chute
+                chute_utilisable = FALSE;
+                // pour chaque chute ...
                 for (indice_chute = 0; llf_length(&(rouleau_actuel_pointeur->liste_chutes)); indice_chute++) {
-
-                    if (*llf_get(&(rouleau_actuel_pointeur->liste_chutes), indice_chute) >= le_actuel_pointeur->hauteur)
-
-                        *llf_get(&(rouleau_actuel_pointeur->liste_chutes),  indice_chute) = *llf_get(&(rouleau_actuel_pointeur->liste_chutes), indice_chute) - le_actuel_pointeur->hauteur;
-                        BOOL chute_utilisable = TRUE;
+                    // si la longueur de la chute est supérieure à la longueur du lé ...
+                    if (*llf_get(&(rouleau_actuel_pointeur->liste_chutes), indice_chute) >= le_actuel_pointeur->hauteur) {
+                        // on utilise la chute pour tapisser le lé
+                        *llf_get(&(rouleau_actuel_pointeur->liste_chutes), indice_chute) -= le_actuel_pointeur->hauteur;
+                        // on passe chute_utilisable à VRAI et on arrête de chercher
+                        chute_utilisable = TRUE;
                         break;
                     }
                 }
-                if (!chute_utilisable){
-
-                    if (llr_get(rouleau_actuel_pointeur->longueur_restante) < le_actuel_pointeur->hauteur){
-
-                            if (llr_get(rouleau_actuel_pointeur->longueur_restante) < 0){
-
-                                rouleau_actuel_pointeur->quantite <- rouleau_actuel_pointeur->quantite + 1;
-                                rouleau_actuel_pointeur->longueur_restante <- rouleau_actuel_pointeur->longueur;
-                            }
-                        rouleau_actuel_pointeur->longueur_restante <- rouleau_actuel_pointeur->longueur_restante - le_actuel_pointeur->hauteur;
+                // si aucune chute n’est utilisable ...
+                if (!chute_utilisable) {
+                    // si la longueur restante de rouleau est plus petite que la hauteur du lé ...
+                    if (rouleau_actuel_pointeur->longueur_restante < le_actuel_pointeur->hauteur) {
+                        // on place la longueur restante de rouleau dans les chutes
+                        if (rouleau_actuel_pointeur->longueur_restante > 0) {
+                            llf_append(&rouleau_actuel_pointeur->liste_chutes, rouleau_actuel_pointeur->longueur_restante);
+                        }
+                        // on commence un nouveau rouleau
+                        rouleau_actuel_pointeur->quantite += 1;
+                        rouleau_actuel_pointeur->longueur_restante = rouleau_actuel_pointeur->longueur;
                     }
                 }
+                // on tapisse le lé avec la longueur restante de rouleau
+                rouleau_actuel_pointeur->longueur_restante -= le_actuel_pointeur->hauteur;
             }
         }
+    }
 }
 
 

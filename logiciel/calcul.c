@@ -15,8 +15,8 @@ void calcul_les(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleaux) {
         // on initialise largeur_dernier_le à 0
         largeur_dernier_le = 0.;
         // pour chaque mur de la série ...
-        for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs); indice_mur++) {
-            mur_actuel_pointeur = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs, indice_mur);
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel_pointeur = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
             // on initialise largeur_restante_mur à la largeur totale du mur
             largeur_restante_mur = mur_actuel_pointeur->largeur;
             // on crée le premier lé
@@ -73,8 +73,8 @@ void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
     // pour chaque série de murs ...
     for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
         // pour chaque mur de la série ...
-        for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs); indice_mur++) {
-            mur_actuel_pointeur = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs, indice_mur);
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel_pointeur = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
             // pour chaque lé du mur ...
             for (indice_le = 0; indice_le < lll_length(&mur_actuel_pointeur->liste_les); indice_le++) {
                 le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le);
@@ -109,13 +109,13 @@ void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float
     surface_totale = 0;
     // pour chaque mur ...
     for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
-        for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs); indice_mur++) {
-            mur_actuel = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs))->liste_murs, indice_mur);
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
             // on ajoute la surface du mur à la surface totale
             surface_totale += mur_actuel->hauteur * mur_actuel->largeur;
             // on retire la surface de chaque obstacle du mur à la surface totale
             for (indice_obstacle = 0; indice_obstacle < llo_length(&mur_actuel->liste_obstacles); indice_obstacle++) {
-                surface_totale -= (llo_get(&mur_actuel->liste_obstacles, indice_obstacle))->hauteur * (llo_get(&mur_actuel->liste_obstacles, indice_obstacle))->largeur;
+                surface_totale -= llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->hauteur * llo_get(&mur_actuel->liste_obstacles, indice_obstacle)->largeur;
             }
             // on retire la surface des pans coupés à la surface totale
             surface_totale -= mur_actuel->hauteur_pan_gauche * mur_actuel->largeur_pan_gauche / 2;

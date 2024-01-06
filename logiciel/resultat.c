@@ -1,26 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "types.h"
 #include "resultat.h"
 
-int resultat(LL_ROULEAU *liste_rouleaux, float *quantite_colle, int *nombre_pots, char *nom_fichier_resultat); 
 
-{
-    printf("4) RESULTAT \n");
-    printf("Nombre de rouleaux : \n");
+void afficher_resultat(LL_ROULEAU *liste_rouleaux, float *quantite_colle, int *nombre_pots, char *nom_fichier_resultat) {
+    // variables
+    int indice_rouleau;
 
-    for (int i = 0; i < llr_length(liste_rouleaux) - 1; i++)
-    {
-        // printf("PAPIER PEINT #", "%i", ":", obtenir (liste_rouleaux i.quantité_rouleaux));
-        printf("PAPIER PEINT #", "%i", ":", llr_get(liste_rouleaux, i).quantité_rouleaux);
+    printf("4) MATIERE PREMIERE A COMMANDER\n");
+    printf("Nombre de rouleaux, par types :\n");
+    for (indice_rouleau = 0; indice_rouleau < llr_length(liste_rouleaux); indice_rouleau++) {
+        printf("\tType de papier peint n°%d : %d\n", indice_rouleau, llr_get(liste_rouleaux, indice_rouleau)->quantite);
     }
-
-    printf("Volume colle : ", quantite_colle);
-
-    if (nombre_pots != 0)
-    {
-        printf("Nombre de pots de colle : ", nombre_pots);
+    // on affiche la quantité de colle en litres
+    printf("Volume de colle : %.2fL\n", *quantite_colle * 1000);
+    if (nombre_pots != 0) {
+        printf("Nombre de pots de colle : %d\n", *nombre_pots);
     }
-
-    printf("Le resultat est enregistré dans ", nom_fichier);
+    printf("\nLe resultat est enregistre dans \"%s\".\n", nom_fichier_resultat);
 }

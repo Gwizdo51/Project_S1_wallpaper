@@ -100,7 +100,7 @@ void calcul_pans_coupes(LL_SERIE_MURS *liste_series_murs) {
 }
 
 
-void calcul_colle(LL_SERIE_MURS_NODE *liste_series_murs, float *quantite_colle, float *volume_pots, int *nombre_pots) {
+void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float *volume_pots, int *nombre_pots) {
     // variables
     int indice_mur, indice_obstacle, indice_serie_murs;
     float surface_totale;

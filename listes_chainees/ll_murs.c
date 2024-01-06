@@ -78,6 +78,9 @@ void llm_remove(LL_MUR *linked_list, int index) {
         // link the previous and the next nodes together
         previous_node->next_node = next_node;
     }
+    // free the node linked lists
+    lll_free(&node_to_remove->data.liste_les);
+    llo_free(&node_to_remove->data.liste_obstacles);
     // free the removed node
     free(node_to_remove);
 }
@@ -86,7 +89,11 @@ void llm_remove(LL_MUR *linked_list, int index) {
 void llm_free(LL_MUR *linked_list) {
     LL_MUR_NODE *current_node = linked_list->first_node, *next_node;
     while (current_node) {
+        // free the current node linked lists
+        lll_free(&current_node->data.liste_les);
+        llo_free(&current_node->data.liste_obstacles);
         next_node = current_node->next_node;
+        // free the current node
         free(current_node);
         current_node = next_node;
     }

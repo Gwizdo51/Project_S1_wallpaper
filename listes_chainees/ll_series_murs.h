@@ -2,6 +2,7 @@
 #define _HEADER_LL_SERIE_MURS
 
 #include "..\logiciel\types.h"
+#include "ll_murs.h"
 
 LL_SERIE_MURS llsm_create();
 int llsm_length(LL_SERIE_MURS *linked_list);

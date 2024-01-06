@@ -78,6 +78,8 @@ void llsm_remove(LL_SERIE_MURS *linked_list, int index) {
         // link the previous and the next nodes together
         previous_node->next_node = next_node;
     }
+    // free the node linked lists
+    llm_free(&node_to_remove->data.liste_murs);
     // free the removed node
     free(node_to_remove);
 }
@@ -86,7 +88,10 @@ void llsm_remove(LL_SERIE_MURS *linked_list, int index) {
 void llsm_free(LL_SERIE_MURS *linked_list) {
     LL_SERIE_MURS_NODE *current_node = linked_list->first_node, *next_node;
     while (current_node) {
+        // free the node linked lists
+        llm_free(&current_node->data.liste_murs);
         next_node = current_node->next_node;
+        // free the current node
         free(current_node);
         current_node = next_node;
     }

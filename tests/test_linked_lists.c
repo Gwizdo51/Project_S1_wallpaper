@@ -3,6 +3,8 @@
 #include "..\listes_chainees\ll_murs.h"
 #include "..\listes_chainees\ll_les.h"
 #include "..\listes_chainees\ll_series_murs.h"
+#include "..\listes_chainees\ll_obstacles.h"
+#include "..\listes_chainees\ll_rouleaux.h"
 
 int main() {
     LL_FLOAT list_float;
@@ -12,6 +14,10 @@ int main() {
     SERIE_MURS serie_murs_temp;
     LL_LE list_les;
     LE le_temp;
+    LL_OBSTACLE list_obstacles;
+    OBSTACLE obstacle_temp;
+    LL_ROULEAU list_rouleaux;
+    ROULEAU rouleau_temp;
     float flottant;
     int index;
     printf("Tests linked lists float\n\n");
@@ -67,6 +73,8 @@ int main() {
     printf("\n");
 
     printf("ajoute des murs a la liste\n");
+    mur_temp.liste_les = lll_create();
+    mur_temp.liste_obstacles = llo_create();
     mur_temp.hauteur = 10.3;
     mur_temp.largeur = 5.6;
     llm_append(&list_murs, mur_temp);
@@ -199,5 +207,106 @@ int main() {
     printf("supprime le contenu de la liste\n");
     llsm_free(&list_series_murs);
     printf("llsm_length(&list_series_murs) = %d\n", llsm_length(&list_series_murs));
+    printf("\n");
+
+
+    printf("\nTests linked lists d'obstacles\n\n");
+
+    printf("cree une liste vide\n");
+    list_obstacles = llo_create();
+    printf("llo_length(&list_obstacles) = %d\n", llo_length(&list_obstacles));
+    printf("\n");
+
+    printf("ajoute des obstacles a la liste\n");
+    obstacle_temp.X = 0.;
+    obstacle_temp.Y = 1.5;
+    llo_append(&list_obstacles, obstacle_temp);
+    obstacle_temp.X = 10.2;
+    obstacle_temp.Y = 7.5;
+    llo_append(&list_obstacles, obstacle_temp);
+    obstacle_temp.X = 5.4;
+    obstacle_temp.Y = 8.1;
+    llo_append(&list_obstacles, obstacle_temp);
+    printf("llo_length(&list_obstacles) = %d\n", llo_length(&list_obstacles));
+    printf("\n");
+
+    printf("accede aux elements de la liste\n");
+    index = 0;
+    printf("list_obstacles[%d].X = %.2f\n", index, (llo_get(&list_obstacles, index))->X);
+    printf("list_obstacles[%d].Y = %.2f\n", index, (llo_get(&list_obstacles, index))->Y);
+    index = 1;
+    printf("list_obstacles[%d].X = %.2f\n", index, (llo_get(&list_obstacles, index))->X);
+    printf("list_obstacles[%d].Y = %.2f\n", index, (llo_get(&list_obstacles, index))->Y);
+    index = 2;
+    printf("list_obstacles[%d].X = %.2f\n", index, (llo_get(&list_obstacles, index))->X);
+    printf("list_obstacles[%d].Y = %.2f\n", index, (llo_get(&list_obstacles, index))->Y);
+    printf("\n");
+
+    printf("retire un element de la liste\n");
+    index = 1;
+    llo_remove(&list_obstacles, index);
+    index = 0;
+    printf("list_obstacles[%d].X = %.2f\n", index, (llo_get(&list_obstacles, index))->X);
+    printf("list_obstacles[%d].Y = %.2f\n", index, (llo_get(&list_obstacles, index))->Y);
+    index = 1;
+    printf("list_obstacles[%d].X = %.2f\n", index, (llo_get(&list_obstacles, index))->X);
+    printf("list_obstacles[%d].Y = %.2f\n", index, (llo_get(&list_obstacles, index))->Y);
+    printf("llo_length(&list_obstacles) = %d\n", llo_length(&list_obstacles));
+    printf("\n");
+
+    printf("supprime le contenu de la liste\n");
+    llo_free(&list_obstacles);
+    printf("llo_length(&list_obstacles) = %d\n", llo_length(&list_obstacles));
+    printf("\n");
+
+
+    printf("\nTests linked lists de rouleaux\n\n");
+
+    printf("cree une liste vide\n");
+    list_rouleaux = llr_create();
+    printf("llr_length(&list_rouleaux) = %d\n", llr_length(&list_rouleaux));
+    printf("\n");
+
+    printf("ajoute des rouleaux a la liste\n");
+    rouleau_temp.liste_chutes = llf_create();
+    rouleau_temp.longueur = 7.1;
+    rouleau_temp.largeur = 5.0;
+    llr_append(&list_rouleaux, rouleau_temp);
+    rouleau_temp.longueur = 1.7;
+    rouleau_temp.largeur = 10.2;
+    llr_append(&list_rouleaux, rouleau_temp);
+    rouleau_temp.longueur = 4.2;
+    rouleau_temp.largeur = 5.4;
+    llr_append(&list_rouleaux, rouleau_temp);
+    printf("llr_length(&list_rouleaux) = %d\n", llr_length(&list_rouleaux));
+    printf("\n");
+
+    printf("accede aux elements de la liste\n");
+    index = 0;
+    printf("list_rouleaux[%d].longueur = %.2f\n", index, (llr_get(&list_rouleaux, index))->longueur);
+    printf("list_rouleaux[%d].largeur = %.2f\n", index, (llr_get(&list_rouleaux, index))->largeur);
+    index = 1;
+    printf("list_rouleaux[%d].longueur = %.2f\n", index, (llr_get(&list_rouleaux, index))->longueur);
+    printf("list_rouleaux[%d].largeur = %.2f\n", index, (llr_get(&list_rouleaux, index))->largeur);
+    index = 2;
+    printf("list_rouleaux[%d].longueur = %.2f\n", index, (llr_get(&list_rouleaux, index))->longueur);
+    printf("list_rouleaux[%d].largeur = %.2f\n", index, (llr_get(&list_rouleaux, index))->largeur);
+    printf("\n");
+
+    printf("retire un element de la liste\n");
+    index = 1;
+    llr_remove(&list_rouleaux, index);
+    index = 0;
+    printf("list_rouleaux[%d].longueur = %.2f\n", index, (llr_get(&list_rouleaux, index))->longueur);
+    printf("list_rouleaux[%d].largeur = %.2f\n", index, (llr_get(&list_rouleaux, index))->largeur);
+    index = 1;
+    printf("list_rouleaux[%d].longueur = %.2f\n", index, (llr_get(&list_rouleaux, index))->longueur);
+    printf("list_rouleaux[%d].largeur = %.2f\n", index, (llr_get(&list_rouleaux, index))->largeur);
+    printf("llr_length(&list_rouleaux) = %d\n", llr_length(&list_rouleaux));
+    printf("\n");
+
+    printf("supprime le contenu de la liste\n");
+    llr_free(&list_rouleaux);
+    printf("llr_length(&list_rouleaux) = %d\n", llr_length(&list_rouleaux));
     printf("\n");
 }

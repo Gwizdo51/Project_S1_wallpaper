@@ -383,6 +383,7 @@ void calcul_colle(LL_SERIE_MURS *liste_series_murs, float *quantite_colle, float
             surface_totale -= mur_actuel->hauteur_pan_droit * mur_actuel->largeur_pan_droit / 2;
         }
     }
+    // printf("surface totale : %.2f\n", surface_totale);
     // calcul de la quantité de colle (en m3)
     *quantite_colle = surface_totale * 0.002;
     // calcul du nombre de pots

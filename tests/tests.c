@@ -132,6 +132,8 @@ void test_calcul() {
     MUR mur, *mur_pointeur;
     OBSTACLE obstacle, *obstacle_pointeur;
     LE *le_pointeur;
+    float quantite_colle, volume_pots;
+    int nombre_pots;
     // on ajoute des rouleaux à la liste
     rouleau.liste_chutes = llf_create();
     rouleau.longueur = 10;
@@ -192,6 +194,7 @@ void test_calcul() {
     llo_append(&mur.liste_obstacles, obstacle);
     llm_append(&serie_murs.liste_murs, mur);
     llsm_append(&liste_series_murs, serie_murs);
+    volume_pots = 2. / 1000;
     // appel calcul_les
     calcul_les(&liste_series_murs, &liste_rouleaux);
     // appel calcul_pans_coupés
@@ -247,6 +250,11 @@ void test_calcul() {
         printf("rouleau n°%d\n", indice_rouleau);
         printf("quantite : %d\n", rouleau_pointeur->quantite);
     }
+    // appel calcul_colle
+    calcul_colle(&liste_series_murs, &quantite_colle, &volume_pots, &nombre_pots);
+    // check quantité colle
+    printf("quantite colle : %.2f\n", quantite_colle * 1000);
+    printf("nombre_pots : %d", nombre_pots);
 }
 
 

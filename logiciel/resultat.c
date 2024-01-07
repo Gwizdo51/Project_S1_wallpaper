@@ -27,9 +27,9 @@ void enregistrer_resultat(LL_ROULEAU *liste_rouleaux, float *quantite_colle, int
     for (indice_rouleau = 0; indice_rouleau < llr_length(liste_rouleaux); indice_rouleau++) {
         fprintf(stream, "\ttype de papier peint n°%d : %d\n", indice_rouleau, llr_get(liste_rouleaux, indice_rouleau)->quantite);
     }
-    printf("\nVolume de colle : %.2fL\n", *quantite_colle * 1000);
+    fprintf(stream, "\nVolume de colle : %.2fL\n", *quantite_colle * 1000);
     if (nombre_pots != 0) {
-        printf("Nombre de pots de colle : %d\n", *nombre_pots);
+        fprintf(stream, "Nombre de pots de colle : %d\n", *nombre_pots);
     }
 }
 

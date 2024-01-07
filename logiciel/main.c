@@ -7,7 +7,7 @@ int main() {
     LL_SERIE_MURS liste_series_murs = llsm_create();
     float quantite_colle, volume_pots;
     int nombre_pots;
-    char *nom_fichier_resultat;
+    char nom_fichier_resultat[STRING_BUFFER_MAX_SIZE];
 
     // saisie des dimensions des murs
     interface_rouleaux(&liste_rouleaux);
@@ -24,7 +24,7 @@ int main() {
     calcul_colle(&liste_series_murs, &quantite_colle, &volume_pots, &nombre_pots);
 
     // affichage et enregistrement du résultat
-    enregistrer_resultat(&liste_rouleaux, &quantite_colle, &nombre_pots, &nom_fichier_resultat);
+    enregistrer_resultat(&liste_rouleaux, &quantite_colle, &nombre_pots, nom_fichier_resultat);
     afficher_resultat(&liste_rouleaux, &quantite_colle, &nombre_pots, nom_fichier_resultat);
 
     return EXIT_SUCCESS;

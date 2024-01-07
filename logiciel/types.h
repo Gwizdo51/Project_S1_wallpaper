@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <math.h>
+#include <time.h>
 
 // booléen (défini dans windows.h, redondant)
 // #define BOOL char

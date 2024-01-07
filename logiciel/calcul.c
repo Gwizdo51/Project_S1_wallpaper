@@ -301,22 +301,29 @@ void calcul_tapissage(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_roulea
     BOOL chute_utilisable;
     MUR *mur_actuel_pointeur;
 
+    // printf("debut calcul_tapissage\n");
     // pour chaque mur ...
     for (indice_serie_murs = 0; indice_serie_murs < llsm_length(liste_series_murs); indice_serie_murs++) {
         rouleau_actuel_pointeur = llr_get(liste_rouleaux, llsm_get(liste_series_murs, indice_serie_murs)->type_papier_peint);
-        for (indice_mur = 0; indice_mur < llm_length(&(llsm_get(liste_series_murs, indice_serie_murs)->liste_murs)); indice_mur++) {
-            mur_actuel_pointeur = llm_get(&(llsm_get(liste_series_murs, indice_serie_murs)->liste_murs), indice_mur);
+        // printf("serie de murs actuelle : %d\n", indice_serie_murs);
+        for (indice_mur = 0; indice_mur < llm_length(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs); indice_mur++) {
+            mur_actuel_pointeur = llm_get(&llsm_get(liste_series_murs, indice_serie_murs)->liste_murs, indice_mur);
+            // printf("mur actuel : %d\n", indice_mur);
             // pour chaque lé du mur ...
-            for (indice_le = 0; lll_length(&(mur_actuel_pointeur->liste_les)); indice_le++) {
-                le_actuel_pointeur = lll_get(&(mur_actuel_pointeur->liste_les), indice_le);
+            for (indice_le = 0; indice_le < lll_length(&mur_actuel_pointeur->liste_les); indice_le++) {
+                le_actuel_pointeur = lll_get(&mur_actuel_pointeur->liste_les, indice_le);
+                // printf("le actuel : %d\n", indice_le);
+                // printf("hauteur : %.2f\n", le_actuel_pointeur->hauteur);
                 // on vérifie si le lé peut être recouvert par une chute
                 chute_utilisable = FALSE;
                 // pour chaque chute ...
-                for (indice_chute = 0; llf_length(&(rouleau_actuel_pointeur->liste_chutes)); indice_chute++) {
+                for (indice_chute = 0; indice_chute < llf_length(&rouleau_actuel_pointeur->liste_chutes); indice_chute++) {
+                    // printf("chute actuelle : %d\n", indice_chute);
                     // si la longueur de la chute est supérieure à la longueur du lé ...
-                    if (*llf_get(&(rouleau_actuel_pointeur->liste_chutes), indice_chute) >= le_actuel_pointeur->hauteur) {
+                    if (*llf_get(&rouleau_actuel_pointeur->liste_chutes, indice_chute) >= le_actuel_pointeur->hauteur) {
+                        // printf("la chute peut etre utilisee\n");
                         // on utilise la chute pour tapisser le lé
-                        *llf_get(&(rouleau_actuel_pointeur->liste_chutes), indice_chute) -= le_actuel_pointeur->hauteur;
+                        *llf_get(&rouleau_actuel_pointeur->liste_chutes, indice_chute) -= le_actuel_pointeur->hauteur;
                         // on passe chute_utilisable à VRAI et on arrête de chercher
                         chute_utilisable = TRUE;
                         break;
@@ -324,21 +331,32 @@ void calcul_tapissage(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_roulea
                 }
                 // si aucune chute n’est utilisable ...
                 if (!chute_utilisable) {
+                    // printf("aucune chute n'est utilisable\n");
+                    // printf("longueur restante : %.2f\n", rouleau_actuel_pointeur->longueur_restante);
+                    // printf("quantite : %d\n", rouleau_actuel_pointeur->quantite);
                     // si la longueur restante de rouleau est plus petite que la hauteur du lé ...
                     if (rouleau_actuel_pointeur->longueur_restante < le_actuel_pointeur->hauteur) {
+                        // printf("la longueur restante n'est pas suffisante\n");
                         // on place la longueur restante de rouleau dans les chutes
                         if (rouleau_actuel_pointeur->longueur_restante > 0) {
+                            // printf("on ajoute une chute de %.2fm à la liste\n", rouleau_actuel_pointeur->longueur_restante);
                             llf_append(&rouleau_actuel_pointeur->liste_chutes, rouleau_actuel_pointeur->longueur_restante);
                         }
                         // on commence un nouveau rouleau
                         rouleau_actuel_pointeur->quantite += 1;
                         rouleau_actuel_pointeur->longueur_restante = rouleau_actuel_pointeur->longueur;
+                        // printf("longueur restante : %.2f\n", rouleau_actuel_pointeur->longueur_restante);
+                        // printf("quantite : %d\n", rouleau_actuel_pointeur->quantite);
                     }
+                    // on tapisse le lé avec la longueur restante de rouleau
+                    rouleau_actuel_pointeur->longueur_restante -= le_actuel_pointeur->hauteur;
+                    // printf("longueur restante apres tapissage : %.2f\n", rouleau_actuel_pointeur->longueur_restante);
                 }
-                // on tapisse le lé avec la longueur restante de rouleau
-                rouleau_actuel_pointeur->longueur_restante -= le_actuel_pointeur->hauteur;
+                // printf("\n");
             }
+            // printf("\n");
         }
+        // printf("\n");
     }
 }
 

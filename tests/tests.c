@@ -48,6 +48,7 @@ void test_interface_rouleaux() {
     }
 }
 
+
 /*
 pour tester:
     1 piece, 3 murs
@@ -125,18 +126,22 @@ void test_interface_colle() {
 void test_calcul() {
     LL_ROULEAU liste_rouleaux = llr_create();
     LL_SERIE_MURS liste_series_murs = llsm_create();
-    int indice_serie_murs, indice_mur, indice_obstacle, indice_le;
-    ROULEAU rouleau;
+    int indice_serie_murs, indice_mur, indice_obstacle, indice_le, indice_rouleau;
+    ROULEAU rouleau, *rouleau_pointeur;
     SERIE_MURS serie_murs, *serie_murs_pointeur;
     MUR mur, *mur_pointeur;
     OBSTACLE obstacle, *obstacle_pointeur;
     LE *le_pointeur;
     // on ajoute des rouleaux à la liste
+    rouleau.liste_chutes = llf_create();
     rouleau.longueur = 10;
     rouleau.largeur = 1;
+    rouleau.longueur_restante = 0;
+    rouleau.quantite = 0;
     rouleau.longueur_motif = 0;
     llr_append(&liste_rouleaux, rouleau);
-    rouleau.largeur = 1;
+    rouleau.liste_chutes = llf_create();
+    // rouleau.largeur = 1;
     rouleau.longueur_motif = 1;
     llr_append(&liste_rouleaux, rouleau);
     // on ajoute des séries de murs
@@ -144,14 +149,14 @@ void test_calcul() {
     serie_murs.type_papier_peint = 0;
     mur.largeur = 5;
     mur.hauteur = 4;
-    // mur.largeur_pan_droit = 2;
-    // mur.hauteur_pan_droit = 3;
-    // mur.largeur_pan_gauche = 3;
-    // mur.hauteur_pan_gauche = 3;
-    mur.largeur_pan_droit = 0;
-    mur.hauteur_pan_droit = 0;
-    mur.largeur_pan_gauche = 0;
-    mur.hauteur_pan_gauche = 0;
+    mur.largeur_pan_droit = 2;
+    mur.hauteur_pan_droit = 3;
+    mur.largeur_pan_gauche = 3;
+    mur.hauteur_pan_gauche = 3;
+    // mur.largeur_pan_droit = 0;
+    // mur.hauteur_pan_droit = 0;
+    // mur.largeur_pan_gauche = 0;
+    // mur.hauteur_pan_gauche = 0;
     mur.liste_les = lll_create();
     mur.liste_obstacles = llo_create();
     obstacle.X = 1;
@@ -195,8 +200,10 @@ void test_calcul() {
     calcul_decoupage_les(&liste_series_murs, &liste_rouleaux);
     // appel calcul_obstacles
     calcul_obstacles(&liste_series_murs, &liste_rouleaux);
+    // appel calcul_assemblage_les
+    calcul_assemblage_les(&liste_series_murs, &liste_rouleaux);
     // check des lés créés
-    printf("nombre de series de murs creees : %d\n\n", llsm_length(&liste_series_murs));
+    printf("nombre de series de murs crees : %d\n\n", llsm_length(&liste_series_murs));
     for (indice_serie_murs = 0; indice_serie_murs < llsm_length(&liste_series_murs); indice_serie_murs++) {
         serie_murs_pointeur = llsm_get(&liste_series_murs, indice_serie_murs);
         printf("serie de murs n°%d\n", indice_serie_murs);
@@ -231,6 +238,14 @@ void test_calcul() {
             }
         }
         printf("\n");
+    }
+    // appel calcul_tapissage
+    calcul_tapissage(&liste_series_murs, &liste_rouleaux);
+    // check des quantité de rouleaux
+    for (indice_rouleau = 0; indice_rouleau < llr_length(&liste_rouleaux); indice_rouleau++) {
+        rouleau_pointeur = llr_get(&liste_rouleaux, indice_rouleau);
+        printf("rouleau n°%d\n", indice_rouleau);
+        printf("quantite : %d\n", rouleau_pointeur->quantite);
     }
 }
 

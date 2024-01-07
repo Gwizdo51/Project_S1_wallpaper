@@ -49,4 +49,6 @@ void afficher_resultat(LL_ROULEAU *liste_rouleaux, float *quantite_colle, int *n
         printf("Nombre de pots de colle : %d\n", *nombre_pots);
     }
     printf("\nLe resultat est enregistre dans \"%s\".\n", nom_fichier_resultat);
+    printf("\n");
+    system("pause");
 }

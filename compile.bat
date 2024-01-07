@@ -24,6 +24,6 @@ if %ERRORLEVEL% gtr 0 (
     pause
     exit /b 1
 )
-echo compilation successful
+echo compilation reussie
 pause
 exit /b 0

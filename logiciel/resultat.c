@@ -25,12 +25,14 @@ void enregistrer_resultat(LL_ROULEAU *liste_rouleaux, float *quantite_colle, int
     fprintf(stream, "Matiere premiere a commander :\n\n");
     fprintf(stream, "Nombre de rouleaux, par types :\n");
     for (indice_rouleau = 0; indice_rouleau < llr_length(liste_rouleaux); indice_rouleau++) {
-        fprintf(stream, "\ttype de papier peint n°%d : %d\n", indice_rouleau, llr_get(liste_rouleaux, indice_rouleau)->quantite);
+        fprintf(stream, "\ttype de papier peint numero %d : %d\n", indice_rouleau, llr_get(liste_rouleaux, indice_rouleau)->quantite);
     }
     fprintf(stream, "\nVolume de colle : %.2fL\n", *quantite_colle * 1000);
     if (nombre_pots != 0) {
         fprintf(stream, "Nombre de pots de colle : %d\n", *nombre_pots);
     }
+
+    fclose(stream);
 }
 
 
@@ -38,10 +40,10 @@ void afficher_resultat(LL_ROULEAU *liste_rouleaux, float *quantite_colle, int *n
     // variables
     int indice_rouleau;
 
-    printf("4) MATIERE PREMIERE A COMMANDER\n");
+    printf("4) MATIERE PREMIERE A COMMANDER\n\n");
     printf("Nombre de rouleaux, par types :\n");
     for (indice_rouleau = 0; indice_rouleau < llr_length(liste_rouleaux); indice_rouleau++) {
-        printf("\ttype de papier peint n°%d : %d\n", indice_rouleau, llr_get(liste_rouleaux, indice_rouleau)->quantite);
+        printf("\ttype de papier peint numero %d : %d\n", indice_rouleau, llr_get(liste_rouleaux, indice_rouleau)->quantite);
     }
     // on affiche la quantité de colle en litres
     printf("Volume de colle : %.2fL\n", *quantite_colle * 1000);

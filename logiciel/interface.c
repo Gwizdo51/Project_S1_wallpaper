@@ -9,9 +9,10 @@ void interface_rouleaux(LL_ROULEAU *liste_rouleaux) {
     int nombre_types_rouleaux;
     ROULEAU nouveau_rouleau;
 
-    printf("1) INVENTAIRE PAPIER PEINT\n");
+    printf("1) INVENTAIRE PAPIER PEINT\n\n");
     printf("Nombre de type de papier peints differents : ");
     scanf("%d", &nombre_types_rouleaux);
+    printf("\n");
     for (indice_rouleau = 0; indice_rouleau < nombre_types_rouleaux; indice_rouleau++) {
         printf("Type de papier n°%d\n", indice_rouleau);
         printf("Dimension rouleaux papier peints :\n");
@@ -46,6 +47,7 @@ void interface_rouleaux(LL_ROULEAU *liste_rouleaux) {
 
 
 void interface_murs(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau) {
+    // variables
     int nombre_pieces, indice_piece, nombre_murs, indice_mur, indice_rouleau_utilise, nb_pans, indice_pan, nb_obstacles, indice_obstacle;
     char caractere_entre;
     BOOL caractere_valide, pan_coupe_gauche_entre, ajouter_a_serie_precedente, premiere_serie_murs;
@@ -53,11 +55,12 @@ void interface_murs(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau)
     MUR nouveau_mur;
     SERIE_MURS serie_murs_actuelle;
 
-    printf("2) PIECES ET MURS\n");
+    printf("2) PIECES ET MURS\n\n");
     premiere_serie_murs = TRUE;
 
     printf("Nombre de pieces a tapisser : ");
     scanf("%d", &nombre_pieces);
+    printf("\n");
 
     for (indice_piece = 0; indice_piece < nombre_pieces; indice_piece++) {
         // on commence une nouvelle série de murs pour chaque nouvelle pièce
@@ -107,7 +110,7 @@ void interface_murs(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau)
                     if (indice_pan == 0) {
                         caractere_valide = FALSE;
                         // demander quel pan l’utilisateur veut entrer en premier
-                        printf("Le pan est-il a gauche ou a droite ?");
+                        printf("Le pan est-il a gauche ou a droite ? [G]auche/[D]roite\n");
                         while (!caractere_valide) {
                             // scanf(" %c", &caractere_entre);
                             caractere_entre = _getch();
@@ -216,6 +219,7 @@ void interface_murs(LL_SERIE_MURS *liste_series_murs, LL_ROULEAU *liste_rouleau)
                 // on ajoute le type de papier peint à la série
                 serie_murs_actuelle.type_papier_peint = indice_rouleau_utilise;
             }
+            printf("\n");
         }
         printf("\n");
     }
@@ -229,7 +233,7 @@ void interface_colle(float *volume_pots) {
     char caractere_entre;
     BOOL caractere_valide;
 
-    printf("4) CONDITIONNEMENT COLLE\n");
+    printf("3) CONDITIONNEMENT COLLE\n");
     printf("Est-ce que la colle est conditionnée ? [O]ui/ [N]on\n");
     caractere_valide = FALSE;
     while (!caractere_valide) {
@@ -240,8 +244,10 @@ void interface_colle(float *volume_pots) {
         }
     }
     if (caractere_entre == 'o') {
-        printf("Entrez le volume de colle par pots : ");
+        printf("Entrez le volume de colle par pots (en litres) : ");
         scanf("%f", volume_pots);
+        // volume de colle dans un pots stocké en m3
+        *volume_pots /= 1000;
     }
     else {
         *volume_pots = 0;

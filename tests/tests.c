@@ -129,27 +129,36 @@ void test_calcul() {
     ROULEAU rouleau;
     SERIE_MURS serie_murs, *serie_murs_pointeur;
     MUR mur, *mur_pointeur;
-    OBSTACLE *obstacle_pointeur;
+    OBSTACLE obstacle, *obstacle_pointeur;
     LE *le_pointeur;
     // on ajoute des rouleaux à la liste
     rouleau.longueur = 10;
     rouleau.largeur = 1;
     rouleau.longueur_motif = 0;
     llr_append(&liste_rouleaux, rouleau);
-    rouleau.largeur = 2;
-    rouleau.longueur_motif = 5;
+    rouleau.largeur = 1;
+    rouleau.longueur_motif = 1;
     llr_append(&liste_rouleaux, rouleau);
     // on ajoute des séries de murs
     serie_murs.liste_murs = llm_create();
     serie_murs.type_papier_peint = 0;
     mur.largeur = 5;
     mur.hauteur = 4;
-    mur.largeur_pan_droit = 2;
-    mur.hauteur_pan_droit = 3;
-    mur.largeur_pan_gauche = 3;
-    mur.hauteur_pan_gauche = 3;
+    // mur.largeur_pan_droit = 2;
+    // mur.hauteur_pan_droit = 3;
+    // mur.largeur_pan_gauche = 3;
+    // mur.hauteur_pan_gauche = 3;
+    mur.largeur_pan_droit = 0;
+    mur.hauteur_pan_droit = 0;
+    mur.largeur_pan_gauche = 0;
+    mur.hauteur_pan_gauche = 0;
     mur.liste_les = lll_create();
     mur.liste_obstacles = llo_create();
+    obstacle.X = 1;
+    obstacle.Y = 1;
+    obstacle.largeur = 3;
+    obstacle.hauteur = 2;
+    llo_append(&mur.liste_obstacles, obstacle);
     llm_append(&serie_murs.liste_murs, mur);
     llsm_append(&liste_series_murs, serie_murs);
     serie_murs.liste_murs = llm_create();
@@ -158,7 +167,7 @@ void test_calcul() {
     mur.hauteur = 4;
     mur.largeur_pan_droit = 0;
     mur.hauteur_pan_droit = 0;
-    mur.largeur_pan_gauche = 0;
+    mur.largeur_pan_gauche = 5;
     mur.hauteur_pan_gauche = 0;
     mur.liste_les = lll_create();
     mur.liste_obstacles = llo_create();
@@ -171,12 +180,21 @@ void test_calcul() {
     mur.hauteur_pan_gauche = 0;
     mur.liste_les = lll_create();
     mur.liste_obstacles = llo_create();
+    obstacle.X = 1;
+    obstacle.Y = 1;
+    obstacle.largeur = 3;
+    obstacle.hauteur = 2;
+    llo_append(&mur.liste_obstacles, obstacle);
     llm_append(&serie_murs.liste_murs, mur);
     llsm_append(&liste_series_murs, serie_murs);
     // appel calcul_les
     calcul_les(&liste_series_murs, &liste_rouleaux);
     // appel calcul_pans_coupés
     calcul_pans_coupes(&liste_series_murs);
+    // appel calcul_decoupage_les
+    calcul_decoupage_les(&liste_series_murs, &liste_rouleaux);
+    // appel calcul_obstacles
+    calcul_obstacles(&liste_series_murs, &liste_rouleaux);
     // check des lés créés
     printf("nombre de series de murs creees : %d\n\n", llsm_length(&liste_series_murs));
     for (indice_serie_murs = 0; indice_serie_murs < llsm_length(&liste_series_murs); indice_serie_murs++) {

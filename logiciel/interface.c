@@ -14,7 +14,7 @@ void interface_rouleaux(LL_ROULEAU *liste_rouleaux) {
     scanf("%d", &nombre_types_rouleaux);
     printf("\n");
     for (indice_rouleau = 0; indice_rouleau < nombre_types_rouleaux; indice_rouleau++) {
-        printf("Type de papier n°%d\n", indice_rouleau);
+        printf("Type de papier numero %d\n", indice_rouleau);
         printf("Dimension rouleaux papier peints :\n");
         printf("Largeur : ");
         scanf("%f", &nouveau_rouleau.largeur);
@@ -233,8 +233,8 @@ void interface_colle(float *volume_pots) {
     char caractere_entre;
     BOOL caractere_valide;
 
-    printf("3) CONDITIONNEMENT COLLE\n");
-    printf("Est-ce que la colle est conditionnée ? [O]ui/ [N]on\n");
+    printf("3) CONDITIONNEMENT COLLE\n\n");
+    printf("Est-ce que la colle est conditionnee ? [O]ui/ [N]on\n");
     caractere_valide = FALSE;
     while (!caractere_valide) {
         // scanf("%c", &caractere_entre);
